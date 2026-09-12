@@ -2,6 +2,7 @@ import './globals.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SchemaJsonLd from '../components/SchemaJsonLd';
+import AgentationDev from '../components/AgentationDev';
 import Script from 'next/script';
 
 export const metadata = {
@@ -98,6 +99,7 @@ export default function RootLayout({ children }) {
         <Header />
         <main>{children}</main>
         <Footer />
+        <AgentationDev />
       </body>
     </html>
   );
