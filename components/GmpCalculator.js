@@ -1,71 +1,205 @@
 'use client';
 import { useState } from 'react';
 
-export default function GmpCalculator() {
-  const [issuePrice, setIssuePrice] = useState(100);
-  const [gmp, setGmp] = useState(25);
-  const [lotSize, setLotSize] = useState(1200);
+const PRESET_IPOS = [
+  { name: 'Custom IPO Calculation', price: 100, gmp: 35, lot: 150 },
+  { name: 'Bajaj Housing Finance', price: 70, gmp: 80, lot: 214 },
+  { name: 'KRN Heat Exchanger', price: 220, gmp: 140, lot: 65 },
+  { name: 'Northern Arc Capital', price: 263, gmp: 128, lot: 57 },
+  { name: 'Arkade Developers', price: 128, gmp: 65, lot: 110 },
+  { name: 'Qualiance International (SME)', price: 100, gmp: 38, lot: 1200 }
+];
 
+export default function GmpCalculator() {
+  const [selectedPreset, setSelectedPreset] = useState(PRESET_IPOS[0].name);
+  const [issuePrice, setIssuePrice] = useState(100);
+  const [gmp, setGmp] = useState(35);
+  const [lotSize, setLotSize] = useState(150);
+  const [numberOfLots, setNumberOfLots] = useState(1);
+
+  const handlePresetChange = (presetName) => {
+    setSelectedPreset(presetName);
+    const found = PRESET_IPOS.find(p => p.name === presetName);
+    if (found) {
+      setIssuePrice(found.price);
+      setGmp(found.gmp);
+      setLotSize(found.lot);
+    }
+  };
+
+  const totalShares = Number(lotSize) * Number(numberOfLots);
+  const totalInvestment = Number(issuePrice) * totalShares;
   const estimatedListingPrice = Number(issuePrice) + Number(gmp);
-  const percentageGain = issuePrice > 0 ? ((gmp / issuePrice) * 100).toFixed(2) : 0;
-  const totalProfitPerLot = Number(gmp) * Number(lotSize);
+  const totalEstimatedValue = estimatedListingPrice * totalShares;
+  const totalProfit = Number(gmp) * totalShares;
+  const percentageGain = issuePrice > 0 ? ((gmp / issuePrice) * 100).toFixed(1) : 0;
 
   return (
-    <div id="gmp-calculator" className="card" style={{ marginTop: '2rem' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-        <span style={{ fontSize: '1.4rem' }}>🧮</span>
-        <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: 'var(--primary-navy)' }}>
-          Live IPO Allotment GMP &amp; Profit Calculator
-        </h3>
+    <div id="gmp-calculator" className="premium-section-card">
+      <div className="section-card-header">
+        <div className="section-title-wrap">
+          <div className="section-icon-badge calc-badge">🧮</div>
+          <div>
+            <h2 className="section-heading">Live IPO Allotment &amp; Listing Gain Calculator</h2>
+            <p className="section-subtext">Calculate your estimated listing price, ROI percentage, and total profit per lot</p>
+          </div>
+        </div>
+        <span className="live-status-pill green-pill">
+          <span>Real-time Multiplier</span>
+        </span>
       </div>
-      <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
-        Estimate your listing price and total profit per lot based on current Grey Market Premium (GMP).
-      </p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-        <div className="calc-input-group">
-          <label>Issue Cut-off Price (₹)</label>
-          <input 
-            type="number" 
-            className="calc-input" 
-            value={issuePrice} 
-            onChange={(e) => setIssuePrice(e.target.value)}
-          />
-        </div>
-
-        <div className="calc-input-group">
-          <label>Current GMP Premium (₹)</label>
-          <input 
-            type="number" 
-            className="calc-input" 
-            value={gmp} 
-            onChange={(e) => setGmp(e.target.value)}
-          />
-        </div>
-
-        <div className="calc-input-group">
-          <label>Lot Size (Shares per Lot)</label>
-          <input 
-            type="number" 
-            className="calc-input" 
-            value={lotSize} 
-            onChange={(e) => setLotSize(e.target.value)}
-          />
+      {/* QUICK PRESET SELECTOR */}
+      <div className="calc-preset-bar">
+        <span className="preset-label">Quick Load IPO:</span>
+        <div className="preset-buttons">
+          {PRESET_IPOS.map((preset) => (
+            <button
+              key={preset.name}
+              type="button"
+              className={`preset-btn ${selectedPreset === preset.name ? 'active' : ''}`}
+              onClick={() => handlePresetChange(preset.name)}
+            >
+              {preset.name}
+            </button>
+          ))}
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
-        <div className="calc-result">
-          <div style={{ fontSize: '0.8rem', color: '#166534', fontWeight: '700' }}>ESTIMATED LISTING PRICE</div>
-          <div className="calc-result-number">₹{estimatedListingPrice}</div>
-          <div style={{ fontSize: '0.82rem', color: '#15803d', fontWeight: '600' }}>+{percentageGain}% Expected Gain</div>
+      {/* INPUTS GRID */}
+      <div className="calc-grid-layout">
+        <div className="calc-inputs-column">
+          {/* ISSUE PRICE */}
+          <div className="calc-input-card">
+            <div className="calc-label-row">
+              <label htmlFor="calc-price">Issue Price / Cut-off (₹)</label>
+              <span className="calc-badge-val">₹{issuePrice}</span>
+            </div>
+            <input 
+              id="calc-price"
+              type="number" 
+              className="calc-text-input" 
+              value={issuePrice} 
+              onChange={(e) => {
+                setIssuePrice(Number(e.target.value));
+                setSelectedPreset('Custom IPO Calculation');
+              }}
+              min="1"
+            />
+          </div>
+
+          {/* CURRENT GMP */}
+          <div className="calc-input-card">
+            <div className="calc-label-row">
+              <label htmlFor="calc-gmp">Current Grey Market Premium - GMP (₹)</label>
+              <span className="calc-badge-val profit-val">+₹{gmp}</span>
+            </div>
+            <input 
+              id="calc-gmp"
+              type="number" 
+              className="calc-text-input" 
+              value={gmp} 
+              onChange={(e) => {
+                setGmp(Number(e.target.value));
+                setSelectedPreset('Custom IPO Calculation');
+              }}
+              min="0"
+            />
+          </div>
+
+          {/* LOT SIZE & NUMBER OF LOTS */}
+          <div className="calc-row-split">
+            <div className="calc-input-card">
+              <div className="calc-label-row">
+                <label htmlFor="calc-lot">Lot Size (Shares)</label>
+              </div>
+              <input 
+                id="calc-lot"
+                type="number" 
+                className="calc-text-input" 
+                value={lotSize} 
+                onChange={(e) => {
+                  setLotSize(Number(e.target.value));
+                  setSelectedPreset('Custom IPO Calculation');
+                }}
+                min="1"
+              />
+            </div>
+
+            <div className="calc-input-card">
+              <div className="calc-label-row">
+                <label htmlFor="calc-lots-count">Allotted Lots</label>
+              </div>
+              <select
+                id="calc-lots-count"
+                className="calc-text-input"
+                value={numberOfLots}
+                onChange={(e) => setNumberOfLots(Number(e.target.value))}
+              >
+                <option value="1">1 Lot (Retail)</option>
+                <option value="2">2 Lots</option>
+                <option value="5">5 Lots</option>
+                <option value="10">10 Lots</option>
+                <option value="14">14 Lots (Max Retail)</option>
+                <option value="20">20+ Lots (sHNI / bHNI)</option>
+              </select>
+            </div>
+          </div>
         </div>
 
-        <div className="calc-result" style={{ background: '#eff6ff', borderColor: '#bfdbfe' }}>
-          <div style={{ fontSize: '0.8rem', color: '#1e40af', fontWeight: '700' }}>EXPECTED PROFIT PER LOT</div>
-          <div className="calc-result-number" style={{ color: '#1d4ed8' }}>₹{totalProfitPerLot.toLocaleString('en-IN')}</div>
-          <div style={{ fontSize: '0.82rem', color: '#2563eb', fontWeight: '600' }}>For 1 Retail Lot ({lotSize} shares)</div>
+        {/* OUTPUT STATS CARD */}
+        <div className="calc-results-column">
+          <div className="calc-output-hero-card">
+            <div className="output-top-row">
+              <span className="output-subtitle">ESTIMATED LISTING GAIN</span>
+              <span className="output-pct-pill">+{percentageGain}% ROI</span>
+            </div>
+
+            <div className="output-main-profit">
+              <span className="currency-symbol">₹</span>
+              <span className="profit-digits">{totalProfit.toLocaleString('en-IN')}</span>
+            </div>
+            <div className="profit-caption">Expected Total Net Profit on Listing</div>
+
+            <div className="output-breakdown-grid">
+              <div className="breakdown-item">
+                <span className="breakdown-lbl">Applied Investment:</span>
+                <strong className="breakdown-val">₹{totalInvestment.toLocaleString('en-IN')}</strong>
+              </div>
+              <div className="breakdown-item">
+                <span className="breakdown-lbl">Est. Listing Price:</span>
+                <strong className="breakdown-val highlight-val">₹{estimatedListingPrice} / share</strong>
+              </div>
+              <div className="breakdown-item">
+                <span className="breakdown-lbl">Total Shares:</span>
+                <strong className="breakdown-val">{totalShares} shares ({numberOfLots} Lot)</strong>
+              </div>
+              <div className="breakdown-item">
+                <span className="breakdown-lbl">Est. Total Portfolio:</span>
+                <strong className="breakdown-val">₹{totalEstimatedValue.toLocaleString('en-IN')}</strong>
+              </div>
+            </div>
+
+            {/* PROGRESS GAUGE BAR */}
+            <div className="profit-gauge-container">
+              <div className="gauge-labels">
+                <span>Issue: ₹{issuePrice}</span>
+                <span>Est. Open: ₹{estimatedListingPrice}</span>
+              </div>
+              <div className="gauge-track">
+                <div 
+                  className="gauge-fill" 
+                  style={{ width: `${Math.min(Math.max(percentageGain, 10), 100)}%` }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      {/* DISCLAIMER FOOTER */}
+      <div className="calc-disclaimer-note">
+        <strong>⚠️ Regulatory Note:</strong> Grey Market Premium (GMP) is an informal indicator and is neither approved nor monitored by SEBI or Stock Exchanges. Actual listing price may vary based on market conditions on listing day.
       </div>
     </div>
   );

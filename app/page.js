@@ -1,9 +1,10 @@
 'use client';
 import { useState } from 'react';
+import Link from 'next/link';
+import MarketTicker from '../components/MarketTicker';
 import RegistrarLauncher from '../components/RegistrarLauncher';
 import LiveIpoTable from '../components/LiveIpoTable';
 import GmpCalculator from '../components/GmpCalculator';
-import Link from 'next/link';
 
 const FAQS = [
   {
@@ -21,6 +22,37 @@ const FAQS = [
   {
     q: 'What is Grey Market Premium (GMP)?',
     a: 'Grey Market Premium (GMP) is an informal, non-official market price estimate where investors trade IPO applications or shares before official stock exchange listing. While helpful for sentiment, it is not official or guaranteed by NSE/BSE.'
+  },
+  {
+    q: 'Why does Link Intime or KFintech show "Record Not Found"?',
+    a: 'When an IPO registrar is actively uploading millions of records on the allotment evening, servers can take 2-4 hours to index all applications. If you get "Record Not Found", wait 30 minutes, double-check your PAN, or verify via BSE Appli Check portal.'
+  }
+];
+
+const STEPS = [
+  {
+    step: '01',
+    title: 'Select Registrar Portal',
+    desc: 'Identify whether Link Intime, KFintech, Bigshare, or CAMS is managing the issue and launch the direct gateway.',
+    icon: '🏛️'
+  },
+  {
+    step: '02',
+    title: 'Enter PAN or App No.',
+    desc: 'Select the company name from the dropdown and type your 10-digit PAN card number or DP Client ID.',
+    icon: '💳'
+  },
+  {
+    step: '03',
+    title: 'Verify Allotment Status',
+    desc: 'Instantly view total shares applied, shares allotted, cutoff price, and refund/unblock authorization status.',
+    icon: '📊'
+  },
+  {
+    step: '04',
+    title: 'Demat Credit & Listing',
+    desc: 'Allotted shares are credited to your CDSL/NSDL Demat account by T+2 day before market listing on T+3 day.',
+    icon: '🚀'
   }
 ];
 
@@ -32,152 +64,231 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="homepage-wrapper">
+      {/* REAL-TIME MARKET TICKER */}
+      <MarketTicker />
+
       {/* HERO SECTION */}
       <section className="hero-section">
-        <div className="container">
+        <div className="container hero-container">
+          {/* BADGE */}
           <div className="hero-badge">
-            <div className="live-pulse-dot" />
-            <span>Live IPO Allotment Feed (September 2026)</span>
+            <span className="live-pulse-dot" />
+            <span>LIVE IPO ALLOTMENT PORTAL • SEPTEMBER 2026</span>
           </div>
 
+          {/* MAIN HEADLINE */}
           <h1 className="hero-title">
-            Check <span>IPO Allotment Status</span> &amp; Live GMP
+            Check <span className="gradient-text">IPO Allotment Status</span> &amp; Real-Time Live GMP
           </h1>
 
+          {/* SUBTITLE */}
           <p className="hero-subtitle">
-            Fast, verified, 1-click status checking via Link Intime, KFintech, Bigshare, and BSE/NSE. Real-time subscription analytics &amp; SEBI T+3 allotment tracking.
+            Fast, 100% verified 1-click status checking via official SEBI registrars — Link Intime, KFintech, Bigshare, and BSE/NSE. Real-time subscription analytics &amp; T+3 listing tracking.
           </p>
-        </div>
-      </section>
 
-      {/* MAIN CONTENT AREA */}
-      <div className="container">
-        <div className="layout-grid">
-          {/* MAIN COLUMN */}
-          <div>
-            <RegistrarLauncher />
-            <LiveIpoTable />
-            <GmpCalculator />
-
-            {/* STEP-BY-STEP GUIDE */}
-            <div className="card" style={{ marginTop: '2rem' }}>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: 'var(--primary-navy)', marginBottom: '1rem' }}>
-                📖 3 Simple Steps to Check IPO Allotment Status Online
-              </h3>
-
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
-                <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                  <div style={{ fontWeight: '800', color: 'var(--primary-teal)', fontSize: '1.1rem', marginBottom: '0.3rem' }}>Step 1</div>
-                  <strong style={{ fontSize: '0.9rem' }}>Select Official Registrar</strong>
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '0.3rem' }}>
-                    Identify whether your IPO is managed by Link Intime, KFintech, Bigshare, or CAMS and click the direct portal link above.
-                  </p>
-                </div>
-
-                <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                  <div style={{ fontWeight: '800', color: 'var(--primary-teal)', fontSize: '1.1rem', marginBottom: '0.3rem' }}>Step 2</div>
-                  <strong style={{ fontSize: '0.9rem' }}>Select Company &amp; PAN</strong>
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '0.3rem' }}>
-                    Choose the IPO from the drop-down menu and enter your 10-digit PAN number or Application ID.
-                  </p>
-                </div>
-
-                <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                  <div style={{ fontWeight: '800', color: 'var(--primary-teal)', fontSize: '1.1rem', marginBottom: '0.3rem' }}>Step 3</div>
-                  <strong style={{ fontSize: '0.9rem' }}>View Allotted Shares</strong>
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '0.3rem' }}>
-                    Click Submit. The screen will display applied shares, allotted shares, and refund status instantly.
-                  </p>
-                </div>
+          {/* HERO QUICK ACTION STATS */}
+          <div className="hero-stats-grid">
+            <div className="hero-stat-card">
+              <div className="stat-icon-wrap">⚡</div>
+              <div className="stat-data">
+                <span className="stat-value">1-Click</span>
+                <span className="stat-label">Direct SEBI Gateway</span>
               </div>
             </div>
 
-            {/* EXPANDABLE FAQ SECTION */}
-            <div className="faq-section">
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--primary-navy)', marginBottom: '1rem' }}>
-                ❓ Frequently Asked Questions (IPO Allotment FAQ)
-              </h3>
+            <div className="hero-stat-card">
+              <div className="stat-icon-wrap">🛡️</div>
+              <div className="stat-data">
+                <span className="stat-value">100% Safe</span>
+                <span className="stat-label">Official Encrypted Servers</span>
+              </div>
+            </div>
 
-              {FAQS.map((faq, i) => (
-                <div key={i} className="faq-item">
-                  <button className="faq-question" onClick={() => toggleFaq(i)}>
-                    <span>{faq.q}</span>
-                    <span style={{ fontSize: '1.2rem', color: 'var(--primary-teal)' }}>
-                      {openFaq === i ? '−' : '+'}
-                    </span>
-                  </button>
-                  {openFaq === i && (
-                    <div className="faq-answer">
-                      {faq.a}
-                    </div>
-                  )}
+            <div className="hero-stat-card">
+              <div className="stat-icon-wrap">⏱️</div>
+              <div className="stat-data">
+                <span className="stat-value">SEBI T+3</span>
+                <span className="stat-label">Fast Settlement Cycle</span>
+              </div>
+            </div>
+
+            <div className="hero-stat-card">
+              <div className="stat-icon-wrap">📈</div>
+              <div className="stat-data">
+                <span className="stat-value">Live GMP</span>
+                <span className="stat-label">Instant Profit Calculator</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* MAIN LAYOUT BODY */}
+      <div className="container main-content-container">
+        <div className="layout-grid">
+          {/* PRIMARY CONTENT COLUMN */}
+          <div className="primary-column">
+            {/* 1. REGISTRAR LAUNCHER */}
+            <RegistrarLauncher />
+
+            {/* 2. LIVE IPO TABLE */}
+            <LiveIpoTable />
+
+            {/* 3. GMP & PROFIT CALCULATOR */}
+            <GmpCalculator />
+
+            {/* 4. 4-STEP INFOGRAPHIC ROADMAP */}
+            <div className="premium-section-card">
+              <div className="section-card-header">
+                <div className="section-title-wrap">
+                  <div className="section-icon-badge step-badge">🗺️</div>
+                  <div>
+                    <h2 className="section-heading">How IPO Allotment &amp; Settlement Works (SEBI T+3 Process)</h2>
+                    <p className="section-subtext">Comprehensive 4-stage guide from UPI bidding to Demat share credit</p>
+                  </div>
                 </div>
-              ))}
+              </div>
+
+              <div className="steps-roadmap-grid">
+                {STEPS.map((s, idx) => (
+                  <div key={idx} className="step-roadmap-card">
+                    <div className="step-number-tag">{s.step}</div>
+                    <div className="step-icon">{s.icon}</div>
+                    <h3 className="step-title">{s.title}</h3>
+                    <p className="step-desc">{s.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 5. INTERACTIVE FAQ ACCORDION */}
+            <div className="premium-section-card">
+              <div className="section-card-header">
+                <div className="section-title-wrap">
+                  <div className="section-icon-badge faq-badge">❓</div>
+                  <div>
+                    <h2 className="section-heading">Frequently Asked Questions (IPO Allotment FAQ)</h2>
+                    <p className="section-subtext">Common queries regarding PAN verification, ASBA refunds, and Demat credit</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="faq-accordion-list">
+                {FAQS.map((faq, i) => (
+                  <div key={i} className={`faq-accordion-item ${openFaq === i ? 'open' : ''}`}>
+                    <button 
+                      className="faq-accordion-btn" 
+                      onClick={() => toggleFaq(i)}
+                      aria-expanded={openFaq === i}
+                    >
+                      <span className="faq-question-text">{faq.q}</span>
+                      <span className="faq-toggle-icon">{openFaq === i ? '−' : '+'}</span>
+                    </button>
+                    {openFaq === i && (
+                      <div className="faq-accordion-content">
+                        <p>{faq.a}</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* SIDEBAR COLUMN */}
-          <div>
-            {/* UPSTOX DEMAT PARTNER CARD */}
+          <aside className="sidebar-column">
+            {/* UPSTOX PARTNER CARD */}
             <div className="demat-promo-card">
-              <span className="demat-badge">Broker Partner / Referral Link</span>
+              <div className="demat-card-badge">Broker Partner • 0 Brokerage</div>
               <h3 className="demat-title">Open Free Demat Account</h3>
               <p className="demat-desc">
-                Apply for Mainboard and SME IPOs with ₹0 brokerage on delivery and fast UPI mandate verification on Upstox.
+                Apply for Mainboard and SME IPOs with ₹0 brokerage on delivery and lightning-fast UPI mandate verification on Upstox.
               </p>
+              
+              <ul className="demat-features-list">
+                <li>✓ Instant Paperless KYC in 5 Mins</li>
+                <li>✓ 1-Click UPI Auto-Mandate Support</li>
+                <li>✓ Direct Mainboard &amp; SME IPO Bidding</li>
+              </ul>
+
               <a 
                 href="https://upstox.com/open-account/?f=7VB7" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn-upstox"
               >
-                Open Free Upstox Account →
+                <span>Open Free Account Now</span>
+                <span className="btn-arrow">→</span>
               </a>
+
               <div className="demat-disclosure">
-                Disclosure: This is an affiliate/partner link. We may receive referral compensation if you register through this link at zero extra cost to you.
+                Disclosure: This is an official partner/referral link. We may receive referral compensation if you register through this link at no additional cost to you.
               </div>
             </div>
 
-            {/* TRENDING ARTICLES WIDGET */}
-            <div className="sidebar-widget">
-              <h4 style={{ fontSize: '1rem', fontWeight: '700', marginBottom: '1rem', color: 'var(--primary-navy)' }}>
-                📖 Popular IPO Guides
-              </h4>
-              <ul style={{ listStyle: 'none' }}>
-                <li style={{ marginBottom: '0.75rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.75rem' }}>
-                  <Link href="/blog/how-to-check-ipo-allotment-status" style={{ fontSize: '0.88rem', fontWeight: '600', color: 'var(--text-main)' }}>
-                    🔥 Step-by-Step Guide: How to Check IPO Allotment Status Online (2026)
-                  </Link>
-                </li>
-                <li style={{ marginBottom: '0.75rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.75rem' }}>
-                  <Link href="/blog/what-happens-after-ipo-allotment" style={{ fontSize: '0.88rem', fontWeight: '600', color: 'var(--text-main)' }}>
-                    🏦 What Happens After IPO Allotment? ASBA Refund &amp; Demat Credit
-                  </Link>
-                </li>
-                <li style={{ marginBottom: '0.75rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.75rem' }}>
-                  <Link href="/blog/xtranet-technologies-ipo-review" style={{ fontSize: '0.88rem', fontWeight: '600', color: 'var(--text-main)' }}>
-                    📊 Xtranet Technologies IPO Analysis &amp; Price Band
-                  </Link>
-                </li>
-                <li style={{ marginBottom: '0.75rem' }}>
-                  <Link href="/blog/dhoot-transmission-ipo-review" style={{ fontSize: '0.88rem', fontWeight: '600', color: 'var(--text-main)' }}>
-                    🚗 Dhoot Transmission IPO Review &amp; Allotment Prediction
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            {/* POPULAR GUIDES WIDGET */}
+            <div className="sidebar-widget-card">
+              <div className="sidebar-widget-header">
+                <span className="widget-header-icon">📖</span>
+                <h3 className="widget-header-title">Popular In-Depth Guides</h3>
+              </div>
+              <div className="guides-list">
+                <Link href="/blog/how-to-check-ipo-allotment-status" className="guide-item-link">
+                  <span className="guide-item-tag">Essential Guide</span>
+                  <strong className="guide-item-title">Step-by-Step: How to Check IPO Allotment Status Online (2026)</strong>
+                  <span className="guide-item-meta">5 min read • By Mahesh Chavan</span>
+                </Link>
 
-            {/* AD BANNER CONTAINER */}
-            <div className="sidebar-widget" style={{ textAlign: 'center', background: '#f8fafc', padding: '2rem 1rem' }}>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>
-                ADVERTISEMENT
-              </span>
-              <div style={{ minHeight: '250px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#e2e8f0', borderRadius: '8px', color: '#64748b', fontSize: '0.85rem' }}>
-                Google AdSense Responsive Unit
+                <Link href="/blog/what-happens-after-ipo-allotment" className="guide-item-link">
+                  <span className="guide-item-tag">Settlement</span>
+                  <strong className="guide-item-title">What Happens After IPO Allotment? ASBA Refund &amp; Demat Credit</strong>
+                  <span className="guide-item-meta">6 min read • Investor Advisory</span>
+                </Link>
+
+                <Link href="/blog/bajaj-housing-finance-ipo-allotment-review" className="guide-item-link">
+                  <span className="guide-item-tag">Review</span>
+                  <strong className="guide-item-title">Bajaj Housing Finance IPO: Allotment Date &amp; Listing Gain Strategy</strong>
+                  <span className="guide-item-meta">4 min read • IPO Analysis</span>
+                </Link>
+
+                <Link href="/blog/xtranet-technologies-ipo-review" className="guide-item-link">
+                  <span className="guide-item-tag">SME Sector</span>
+                  <strong className="guide-item-title">Xtranet Technologies IPO Analysis &amp; Price Band Valuation</strong>
+                  <span className="guide-item-meta">4 min read • SME Review</span>
+                </Link>
               </div>
             </div>
-          </div>
+
+            {/* COMMUNITY JOIN CARD */}
+            <div className="sidebar-widget-card community-card">
+              <div className="community-header">
+                <span className="community-icon">💬</span>
+                <div>
+                  <h4 className="community-title">Join Live IPO Alerts</h4>
+                  <p className="community-sub">Get instant allotment notifications on WhatsApp</p>
+                </div>
+              </div>
+              <a 
+                href="https://chat.whatsapp.com/DQH7iDHuphR22OfJsHmPuo" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn-community-whatsapp"
+              >
+                <span>Join WhatsApp Channel</span>
+                <span>↗</span>
+              </a>
+            </div>
+
+            {/* GOOGLE ADSENSE RESPONSIVE UNIT */}
+            <div className="sidebar-widget-card ads-widget-card">
+              <div className="ad-container-tag">ADVERTISEMENT</div>
+              <div className="ad-box-placeholder">
+                <span className="ad-text-label">Google AdSense Responsive Unit</span>
+                <span className="ad-subtext-label">High Visibility In-Feed Placement</span>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </div>
