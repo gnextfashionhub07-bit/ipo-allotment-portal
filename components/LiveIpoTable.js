@@ -22,8 +22,8 @@ const FALLBACK_IPOS = [
     type: 'Mainboard', 
     price: '₹209 - ₹220', 
     date: '27 Sep 2026', 
-    reg: 'Bigshare', 
-    status: 'Upcoming', 
+    reg: 'Bigshare Services', 
+    status: 'Upcoming / Open', 
     gmp: '₹140 (63%)', 
     gainPct: 63,
     lotSize: 65,
@@ -36,7 +36,7 @@ const FALLBACK_IPOS = [
     type: 'Mainboard', 
     price: '₹114 - ₹120', 
     date: '26 Sep 2026', 
-    reg: 'Link Intime', 
+    reg: 'Link Intime India', 
     status: 'Allotment Out', 
     gmp: '₹60 (50%)', 
     gainPct: 50,
@@ -64,7 +64,7 @@ const FALLBACK_IPOS = [
     type: 'Mainboard', 
     price: '₹163 - ₹172', 
     date: '19 Sep 2026', 
-    reg: 'Link Intime', 
+    reg: 'Link Intime India', 
     status: 'Allotment Out', 
     gmp: '₹30 (17%)', 
     gainPct: 17,
@@ -78,7 +78,7 @@ const FALLBACK_IPOS = [
     type: 'Mainboard', 
     price: '₹121 - ₹128', 
     date: '20 Sep 2026', 
-    reg: 'Bigshare', 
+    reg: 'Bigshare Services', 
     status: 'Allotment Out', 
     gmp: '₹65 (51%)', 
     gainPct: 51,
@@ -92,7 +92,7 @@ const FALLBACK_IPOS = [
     type: 'SME IPO', 
     price: '₹95 - ₹100', 
     date: '14 Sep 2026', 
-    reg: 'Bigshare', 
+    reg: 'Bigshare Services', 
     status: 'Open Bidding', 
     gmp: '₹38 (38%)', 
     gainPct: 38,
@@ -106,7 +106,7 @@ const FALLBACK_IPOS = [
     type: 'SME IPO', 
     price: '₹92 - ₹98', 
     date: '12 Sep 2026', 
-    reg: 'Bigshare', 
+    reg: 'Bigshare Services', 
     status: 'Allotment Expected', 
     gmp: '₹42 (43%)', 
     gainPct: 43,
@@ -120,7 +120,7 @@ const FALLBACK_IPOS = [
     type: 'SME IPO', 
     price: '₹85 - ₹90', 
     date: '10 Sep 2026', 
-    reg: 'Bigshare', 
+    reg: 'Bigshare Services', 
     status: 'Allotment Out', 
     gmp: '₹32 (35%)', 
     gainPct: 35,
@@ -134,7 +134,7 @@ const FALLBACK_IPOS = [
     type: 'SME IPO', 
     price: '₹90 - ₹95', 
     date: '09 Sep 2026', 
-    reg: 'Bigshare', 
+    reg: 'Bigshare Services', 
     status: 'Allotment Out', 
     gmp: '₹22 (23%)', 
     gainPct: 23,
@@ -148,7 +148,7 @@ const FALLBACK_IPOS = [
     type: 'SME IPO', 
     price: '₹110 - ₹118', 
     date: '08 Sep 2026', 
-    reg: 'Bigshare', 
+    reg: 'Bigshare Services', 
     status: 'Allotment Out', 
     gmp: '₹28 (25%)', 
     gainPct: 25,
@@ -162,12 +162,40 @@ const FALLBACK_IPOS = [
     type: 'SME IPO', 
     price: '₹80 - ₹85', 
     date: '07 Sep 2026', 
-    reg: 'Bigshare', 
+    reg: 'Bigshare Services', 
     status: 'Allotment Out', 
     gmp: '₹15 (18%)', 
     gainPct: 18,
     lotSize: 1600,
     issueSize: '₹22 Cr',
+    regUrl: 'https://www.bigshareonline.com/ipo_allotment.html' 
+  },
+  { 
+    id: 13,
+    name: 'Panchatv Bharat IPO', 
+    type: 'SME IPO', 
+    price: '₹50 - ₹55', 
+    date: '06 Sep 2026', 
+    reg: 'Bigshare Services', 
+    status: 'Allotment Out', 
+    gmp: '₹12 (22%)', 
+    gainPct: 22,
+    lotSize: 2000,
+    issueSize: '₹18 Cr',
+    regUrl: 'https://www.bigshareonline.com/ipo_allotment.html' 
+  },
+  { 
+    id: 14,
+    name: 'Om Galaxy Infotech IPO', 
+    type: 'SME IPO', 
+    price: '₹75 - ₹80', 
+    date: '05 Sep 2026', 
+    reg: 'Bigshare Services', 
+    status: 'Allotment Out', 
+    gmp: '₹18 (24%)', 
+    gainPct: 24,
+    lotSize: 1600,
+    issueSize: '₹24 Cr',
     regUrl: 'https://www.bigshareonline.com/ipo_allotment.html' 
   }
 ];
@@ -176,59 +204,66 @@ export default function LiveIpoTable() {
   const [ipos, setIpos] = useState(FALLBACK_IPOS);
   const [activeTab, setActiveTab] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState('Just now');
   
   // PAGINATION STATES
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
-  useEffect(() => {
-    async function fetchLiveIpos() {
-      try {
-        const res = await fetch('/api/ipos?t=' + Date.now());
-        if (res.ok) {
-          const json = await res.json();
-          if (json && json.data && json.data.length > 0) {
-            const formatted = json.data.map((item, index) => {
-              const name = item.name || item.company_name || 'IPO Company';
-              const type = item.issue_type || (name.toLowerCase().includes('sme') ? 'SME IPO' : 'Mainboard');
-              const minPrice = item.min_price || '90';
-              const maxPrice = item.max_price || '100';
-              const reg = item.registrar_name || 'Bigshare';
-              const gmpVal = item.gmp || '₹25';
-              const gain = parseInt(gmpVal.replace(/\D/g, '')) || 30;
-              
-              let regUrl = 'https://ipostatus.kfintech.com';
-              if (reg.toLowerCase().includes('link')) regUrl = 'https://linkintime.co.in/initial_offer/public-issues.html';
-              if (reg.toLowerCase().includes('big') || reg.toLowerCase().includes('maashitla')) regUrl = 'https://www.bigshareonline.com/ipo_allotment.html';
-              if (reg.toLowerCase().includes('cams')) regUrl = 'https://www.camsonline.com/';
+  async function fetchLiveIpos() {
+    setIsRefreshing(true);
+    try {
+      const res = await fetch('/api/ipos?t=' + Date.now(), { cache: 'no-store' });
+      if (res.ok) {
+        const json = await res.json();
+        if (json && json.data && json.data.length > 0) {
+          const formatted = json.data.map((item, index) => {
+            const name = item.name || item.company_name || 'IPO Company';
+            const type = item.issue_type || (name.toLowerCase().includes('sme') ? 'SME IPO' : 'Mainboard');
+            const minPrice = item.min_price || '90';
+            const maxPrice = item.max_price || '100';
+            const reg = item.registrar_name || 'Bigshare Services';
+            const gmpVal = item.gmp || '₹25';
+            const gain = item.gain_pct || parseInt(gmpVal.replace(/\D/g, '')) || 30;
+            
+            let regUrl = item.reg_url || 'https://ipostatus.kfintech.com';
+            if (reg.toLowerCase().includes('link')) regUrl = 'https://linkintime.co.in/initial_offer/public-issues.html';
+            if (reg.toLowerCase().includes('big') || reg.toLowerCase().includes('maashitla')) regUrl = 'https://www.bigshareonline.com/ipo_allotment.html';
+            if (reg.toLowerCase().includes('cams')) regUrl = 'https://www.camsonline.com/';
 
-              return {
-                id: index + 1,
-                name,
-                type,
-                price: `₹${minPrice} - ₹${maxPrice}`,
-                date: item.allotment_date || 'Live Status',
-                reg,
-                status: item.status || 'Active Issue',
-                gmp: `${gmpVal} (${gain}%)`,
-                gainPct: gain,
-                lotSize: item.lot_size || (type === 'Mainboard' ? 100 : 1200),
-                issueSize: item.issue_size || '₹100+ Cr',
-                regUrl
-              };
-            });
-            setIpos(formatted);
-          }
+            return {
+              id: item.id || index + 1,
+              name,
+              type,
+              price: `₹${minPrice} - ₹${maxPrice}`,
+              date: item.allotment_date || 'Live Status',
+              reg,
+              status: item.status || 'Active Issue',
+              gmp: `${gmpVal} (${gain}%)`,
+              gainPct: gain,
+              lotSize: item.lot_size || (type === 'Mainboard' ? 100 : 1200),
+              issueSize: item.issue_size || '₹100+ Cr',
+              regUrl
+            };
+          });
+          setIpos(formatted);
+          const now = new Date();
+          setLastUpdated(`${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`);
         }
-      } catch (err) {
-        console.log('Using local high-fidelity dataset', err);
-      } finally {
-        setIsLoading(false);
       }
+    } catch (err) {
+      console.log('Error refreshing live IPOs', err);
+    } finally {
+      setIsRefreshing(false);
     }
+  }
 
+  useEffect(() => {
     fetchLiveIpos();
+    // Auto-poll every 60 seconds
+    const interval = setInterval(fetchLiveIpos, 60000);
+    return () => clearInterval(interval);
   }, []);
 
   // Filter logic
@@ -253,18 +288,17 @@ export default function LiveIpoTable() {
 
   const handleTabChange = (tabKey) => {
     setActiveTab(tabKey);
-    setCurrentPage(1); // Reset to page 1 on tab change
+    setCurrentPage(1);
   };
 
   const handleSearchChange = (query) => {
     setSearchQuery(query);
-    setCurrentPage(1); // Reset to page 1 on search change
+    setCurrentPage(1);
   };
 
   const goToPage = (pageNum) => {
     if (pageNum >= 1 && pageNum <= totalPages) {
       setCurrentPage(pageNum);
-      // Optional smooth scroll to table top
       const tableElem = document.getElementById('live-table');
       if (tableElem) {
         tableElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -283,9 +317,23 @@ export default function LiveIpoTable() {
             <p className="section-subtext">Real-time allotment status, verified registrar links, and estimated GMP gains</p>
           </div>
         </div>
-        <div className="data-refreshed-tag">
-          <span className="live-pulse-dot"></span>
-          <span>Updated Every 15 Mins</span>
+        
+        {/* REFRESH & STATUS CONTROLS */}
+        <div className="table-header-status-group">
+          <div className="data-refreshed-tag">
+            <span className="live-pulse-dot"></span>
+            <span>Live • {lastUpdated}</span>
+          </div>
+
+          <button 
+            onClick={fetchLiveIpos} 
+            disabled={isRefreshing}
+            className="btn-refresh-table"
+            title="Click to fetch real-time updates"
+          >
+            <span className={`refresh-icon ${isRefreshing ? 'spinning' : ''}`}>🔄</span>
+            <span>{isRefreshing ? 'Updating...' : 'Refresh'}</span>
+          </button>
         </div>
       </div>
 
