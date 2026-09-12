@@ -1,6 +1,7 @@
 import './globals.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import MarketTicker from '../components/MarketTicker';
 import SchemaJsonLd from '../components/SchemaJsonLd';
 import AgentationDev from '../components/AgentationDev';
 import Script from 'next/script';
@@ -96,6 +97,7 @@ export default function RootLayout({ children }) {
         <SchemaJsonLd />
       </head>
       <body>
+        <MarketTicker />
         <Header />
         <main>{children}</main>
         <Footer />

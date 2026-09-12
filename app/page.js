@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import MarketTicker from '../components/MarketTicker';
 import RegistrarLauncher from '../components/RegistrarLauncher';
 import LiveIpoTable from '../components/LiveIpoTable';
 import GmpCalculator from '../components/GmpCalculator';
@@ -65,9 +64,6 @@ export default function Home() {
 
   return (
     <div className="homepage-wrapper">
-      {/* REAL-TIME MARKET TICKER */}
-      <MarketTicker />
-
       {/* HERO SECTION */}
       <section className="hero-section">
         <div className="container hero-container">
