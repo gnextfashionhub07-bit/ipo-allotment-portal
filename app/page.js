@@ -223,38 +223,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* POPULAR GUIDES WIDGET */}
-            <div className="sidebar-widget-card">
-              <div className="sidebar-widget-header">
-                <span className="widget-header-icon">📖</span>
-                <h3 className="widget-header-title">Popular In-Depth Guides</h3>
-              </div>
-              <div className="guides-list">
-                <Link href="/blog/how-to-check-ipo-allotment-status" className="guide-item-link">
-                  <span className="guide-item-tag">Essential Guide</span>
-                  <strong className="guide-item-title">Step-by-Step: How to Check IPO Allotment Status Online (2026)</strong>
-                  <span className="guide-item-meta">5 min read • By Mahesh Chavan</span>
-                </Link>
 
-                <Link href="/blog/what-happens-after-ipo-allotment" className="guide-item-link">
-                  <span className="guide-item-tag">Settlement</span>
-                  <strong className="guide-item-title">What Happens After IPO Allotment? ASBA Refund &amp; Demat Credit</strong>
-                  <span className="guide-item-meta">6 min read • Investor Advisory</span>
-                </Link>
-
-                <Link href="/blog/bajaj-housing-finance-ipo-allotment-review" className="guide-item-link">
-                  <span className="guide-item-tag">Review</span>
-                  <strong className="guide-item-title">Bajaj Housing Finance IPO: Allotment Date &amp; Listing Gain Strategy</strong>
-                  <span className="guide-item-meta">4 min read • IPO Analysis</span>
-                </Link>
-
-                <Link href="/blog/xtranet-technologies-ipo-review" className="guide-item-link">
-                  <span className="guide-item-tag">SME Sector</span>
-                  <strong className="guide-item-title">Xtranet Technologies IPO Analysis &amp; Price Band Valuation</strong>
-                  <span className="guide-item-meta">4 min read • SME Review</span>
-                </Link>
-              </div>
-            </div>
 
             {/* COMMUNITY JOIN CARD */}
             <div className="sidebar-widget-card community-card">
