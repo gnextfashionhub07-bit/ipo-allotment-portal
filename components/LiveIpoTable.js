@@ -141,6 +141,34 @@ const FALLBACK_IPOS = [
     lotSize: 1200,
     issueSize: '₹30 Cr',
     regUrl: 'https://www.bigshareonline.com/ipo_allotment.html' 
+  },
+  { 
+    id: 11,
+    name: 'Infrax Renewable Energy IPO', 
+    type: 'SME IPO', 
+    price: '₹110 - ₹118', 
+    date: '08 Sep 2026', 
+    reg: 'Bigshare', 
+    status: 'Allotment Out', 
+    gmp: '₹28 (25%)', 
+    gainPct: 25,
+    lotSize: 1200,
+    issueSize: '₹35 Cr',
+    regUrl: 'https://www.bigshareonline.com/ipo_allotment.html' 
+  },
+  { 
+    id: 12,
+    name: 'Vinod Texworld IPO', 
+    type: 'SME IPO', 
+    price: '₹80 - ₹85', 
+    date: '07 Sep 2026', 
+    reg: 'Bigshare', 
+    status: 'Allotment Out', 
+    gmp: '₹15 (18%)', 
+    gainPct: 18,
+    lotSize: 1600,
+    issueSize: '₹22 Cr',
+    regUrl: 'https://www.bigshareonline.com/ipo_allotment.html' 
   }
 ];
 
@@ -149,6 +177,10 @@ export default function LiveIpoTable() {
   const [activeTab, setActiveTab] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  
+  // PAGINATION STATES
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   useEffect(() => {
     async function fetchLiveIpos() {
@@ -199,6 +231,7 @@ export default function LiveIpoTable() {
     fetchLiveIpos();
   }, []);
 
+  // Filter logic
   const filteredIpos = ipos.filter((item) => {
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           item.reg.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -212,6 +245,32 @@ export default function LiveIpoTable() {
     if (activeTab === 'OPEN') return item.status.toLowerCase().includes('open') || item.status.toLowerCase().includes('bidding');
     return true;
   });
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredIpos.length / itemsPerPage) || 1;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedIpos = filteredIpos.slice(startIndex, startIndex + itemsPerPage);
+
+  const handleTabChange = (tabKey) => {
+    setActiveTab(tabKey);
+    setCurrentPage(1); // Reset to page 1 on tab change
+  };
+
+  const handleSearchChange = (query) => {
+    setSearchQuery(query);
+    setCurrentPage(1); // Reset to page 1 on search change
+  };
+
+  const goToPage = (pageNum) => {
+    if (pageNum >= 1 && pageNum <= totalPages) {
+      setCurrentPage(pageNum);
+      // Optional smooth scroll to table top
+      const tableElem = document.getElementById('live-table');
+      if (tableElem) {
+        tableElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
 
   return (
     <div id="live-table" className="premium-section-card">
@@ -236,31 +295,31 @@ export default function LiveIpoTable() {
         <div className="filter-tabs-group">
           <button 
             className={`filter-tab-btn ${activeTab === 'ALL' ? 'active' : ''}`}
-            onClick={() => setActiveTab('ALL')}
+            onClick={() => handleTabChange('ALL')}
           >
             All IPOs <span className="tab-count">{ipos.length}</span>
           </button>
           <button 
             className={`filter-tab-btn ${activeTab === 'MAINBOARD' ? 'active' : ''}`}
-            onClick={() => setActiveTab('MAINBOARD')}
+            onClick={() => handleTabChange('MAINBOARD')}
           >
             🏢 Mainboard
           </button>
           <button 
             className={`filter-tab-btn ${activeTab === 'SME' ? 'active' : ''}`}
-            onClick={() => setActiveTab('SME')}
+            onClick={() => handleTabChange('SME')}
           >
             🚀 SME Sector
           </button>
           <button 
             className={`filter-tab-btn ${activeTab === 'ALLOTMENT_OUT' ? 'active' : ''}`}
-            onClick={() => setActiveTab('ALLOTMENT_OUT')}
+            onClick={() => handleTabChange('ALLOTMENT_OUT')}
           >
             ✅ Allotment Out
           </button>
           <button 
             className={`filter-tab-btn ${activeTab === 'OPEN' ? 'active' : ''}`}
-            onClick={() => setActiveTab('OPEN')}
+            onClick={() => handleTabChange('OPEN')}
           >
             🟢 Open Bidding
           </button>
@@ -273,11 +332,11 @@ export default function LiveIpoTable() {
             type="text"
             placeholder="Search IPO, Registrar..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => handleSearchChange(e.target.value)}
             className="table-search-input"
           />
           {searchQuery && (
-            <button className="clear-search-btn" onClick={() => setSearchQuery('')}>✕</button>
+            <button className="clear-search-btn" onClick={() => handleSearchChange('')}>✕</button>
           )}
         </div>
       </div>
@@ -297,7 +356,7 @@ export default function LiveIpoTable() {
             </tr>
           </thead>
           <tbody>
-            {filteredIpos.length === 0 ? (
+            {paginatedIpos.length === 0 ? (
               <tr>
                 <td colSpan="7" style={{ textAlign: 'center', padding: '3rem 1rem', color: 'var(--text-muted)' }}>
                   <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🔍</div>
@@ -306,7 +365,7 @@ export default function LiveIpoTable() {
                 </td>
               </tr>
             ) : (
-              filteredIpos.map((ipo) => (
+              paginatedIpos.map((ipo) => (
                 <tr key={ipo.id} className="table-data-row">
                   {/* COMPANY & TYPE */}
                   <td>
@@ -387,12 +446,58 @@ export default function LiveIpoTable() {
         </table>
       </div>
 
-      {/* FOOTER INFO */}
-      <div className="table-footer-bar">
-        <span className="footer-legend">
-          💡 <strong>Tip:</strong> Click <strong>"Check Status"</strong> to open the official registrar portal directly with pre-selected company settings.
-        </span>
-        <span className="footer-count">Showing {filteredIpos.length} of {ipos.length} IPOs</span>
+      {/* PAGINATION CONTROLS BAR */}
+      <div className="pagination-bar">
+        <div className="pagination-info">
+          <span>Showing <strong>{filteredIpos.length === 0 ? 0 : startIndex + 1}</strong> to <strong>{Math.min(startIndex + itemsPerPage, filteredIpos.length)}</strong> of <strong>{filteredIpos.length}</strong> IPOs</span>
+          
+          <div className="per-page-selector">
+            <label htmlFor="per-page">Per page:</label>
+            <select
+              id="per-page"
+              value={itemsPerPage}
+              onChange={(e) => {
+                setItemsPerPage(Number(e.target.value));
+                setCurrentPage(1);
+              }}
+              className="per-page-select"
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="pagination-buttons">
+          <button 
+            className="btn-page-nav" 
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            title="Previous Page"
+          >
+            ← Prev
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+            <button
+              key={pageNum}
+              className={`btn-page-number ${currentPage === pageNum ? 'active' : ''}`}
+              onClick={() => goToPage(pageNum)}
+            >
+              {pageNum}
+            </button>
+          ))}
+
+          <button 
+            className="btn-page-nav" 
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            title="Next Page"
+          >
+            Next →
+          </button>
+        </div>
       </div>
     </div>
   );
