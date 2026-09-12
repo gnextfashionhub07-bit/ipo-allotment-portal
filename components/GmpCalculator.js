@@ -3,11 +3,12 @@ import { useState } from 'react';
 
 const PRESET_IPOS = [
   { name: 'Custom IPO Calculation', price: 100, gmp: 35, lot: 150 },
-  { name: 'Bajaj Housing Finance', price: 70, gmp: 80, lot: 214 },
-  { name: 'KRN Heat Exchanger', price: 220, gmp: 140, lot: 65 },
-  { name: 'Northern Arc Capital', price: 263, gmp: 128, lot: 57 },
-  { name: 'Arkade Developers', price: 128, gmp: 65, lot: 110 },
-  { name: 'Qualiance International (SME)', price: 100, gmp: 38, lot: 1200 }
+  { name: 'Pranav Constructions', price: 195, gmp: 65, lot: 75 },
+  { name: 'Jindal Supreme', price: 235, gmp: 85, lot: 60 },
+  { name: 'A-One Steels', price: 275, gmp: 95, lot: 54 },
+  { name: 'Hero Motors', price: 325, gmp: 110, lot: 45 },
+  { name: 'Powertronix Eng (SME)', price: 90, gmp: 32, lot: 1600 },
+  { name: 'Sonaselection India (SME)', price: 100, gmp: 38, lot: 1200 }
 ];
 
 export default function GmpCalculator() {
