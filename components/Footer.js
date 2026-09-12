@@ -19,9 +19,6 @@ export default function Footer() {
             <p className="footer-desc-short">
               Fast, real-time IPO Allotment Status Tracker &amp; Official SEBI Registrar Direct Gateway.
             </p>
-            <div className="footer-author-text">
-              <strong>Editor / Founder:</strong> Mahesh Chavan
-            </div>
           </div>
 
           {/* COL 2: QUICK LINKS */}
