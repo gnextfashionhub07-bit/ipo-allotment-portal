@@ -1,46 +1,104 @@
+import Link from 'next/link';
+
 export const metadata = {
   title: 'About Us & Editorial Standards | Allotment Status of IPO',
-  description: 'Learn about Allotment Status of IPO, our founder Mahesh Chavan, editorial principles, and mission to deliver transparent IPO intelligence.',
+  description: 'Learn about Allotment Status of IPO, our founder Mahesh Chavan, editorial principles, and mission to deliver transparent, SEBI-compliant IPO intelligence.',
 };
 
 export default function AboutUsPage() {
   return (
-    <div className="container" style={{ padding: '3rem 1.25rem 5rem' }}>
-      <div style={{ maxWidth: '840px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '2.2rem', fontWeight: '800', color: 'var(--primary-navy)', marginBottom: '1.25rem' }}>
-          About Allotment Status of IPO
-        </h1>
+    <div className="legal-page-wrapper">
+      {/* HERO HEADER */}
+      <section className="legal-hero-header">
+        <div className="container legal-header-container">
+          <nav className="legal-breadcrumbs" aria-label="Breadcrumb">
+            <Link href="/">Home</Link>
+            <span>/</span>
+            <Link href="/p/about-us">Legal &amp; Policy</Link>
+            <span>/</span>
+            <strong>About Us</strong>
+          </nav>
 
-        <div className="card" style={{ padding: '2.5rem', lineHeight: '1.8', fontSize: '1rem', color: '#334155' }}>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: '700', color: 'var(--primary-navy)', marginBottom: '0.75rem' }}>
-            Our Mission &amp; Purpose
-          </h2>
-          <p style={{ marginBottom: '1.25rem' }}>
-            <strong>Allotment Status of IPO</strong> (<code>allotmentstatusofipo.in</code>) is an independent financial education and research platform designed to simplify Initial Public Offering (IPO) verification, subscription tracking, and market analytics for Indian retail investors.
-          </p>
-          <p style={{ marginBottom: '1.5rem' }}>
-            We provide verified, direct gateways to authorized issue registrars (Link Intime, KFin Technologies, Bigshare Services, and CAMS) alongside official BSE and NSE validation tools under SEBI’s T+3 listing framework.
-          </p>
-
-          <h2 style={{ fontSize: '1.4rem', fontWeight: '700', color: 'var(--primary-navy)', marginBottom: '0.75rem' }}>
-            Meet the Founder &amp; Lead Researcher
-          </h2>
-          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1.5rem', marginBottom: '1.5rem' }}>
-            <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: 'var(--primary-navy)' }}>Mahesh Chavan</h3>
-            <span style={{ fontSize: '0.85rem', color: 'var(--primary-teal)', fontWeight: '700', display: 'block', marginBottom: '0.5rem' }}>
-              Founder &amp; Financial Market Analyst
-            </span>
-            <p style={{ fontSize: '0.92rem', color: '#475569', lineHeight: '1.6' }}>
-              Mahesh has extensive experience tracking Indian capital markets, DRHP filings, registrar data structures, and algorithmic market data pipelines. He created this portal to eliminate confusing delays and broken registrar links during high-traffic IPO allotment days.
-            </p>
+          <div className="legal-top-badges">
+            <span className="legal-compliance-pill">🛡️ E-E-A-T Verified</span>
+            <span className="legal-date-pill">📅 Updated: September 2026</span>
           </div>
 
-          <h2 style={{ fontSize: '1.4rem', fontWeight: '700', color: 'var(--primary-navy)', marginBottom: '0.75rem' }}>
-            Editorial Policy &amp; Integrity
-          </h2>
-          <p style={{ marginBottom: '1rem' }}>
-            All guides and data presented on this portal are thoroughly cross-referenced against official SEBI prospectuses, stock exchange disclosures, and registrar notices. We maintain strict independence and do not accept compensation for favorable IPO reviews.
+          <h1 className="legal-page-title">About Allotment Status of IPO</h1>
+          <p className="legal-page-subtitle">
+            An independent educational research platform dedicated to transparent primary market intelligence, registrar navigation, and investor literacy.
           </p>
+        </div>
+      </section>
+
+      {/* 2-COLUMN LAYOUT */}
+      <div className="container legal-layout-container">
+        <div className="legal-columns-grid">
+          {/* SIDEBAR NAVIGATION */}
+          <aside className="legal-sidebar-sticky">
+            <h3 className="legal-sidebar-title">Legal &amp; Policy Hub</h3>
+            <ul className="legal-nav-menu">
+              <li className="legal-nav-item active"><Link href="/p/about-us">🛡️ About Us</Link></li>
+              <li className="legal-nav-item"><Link href="/p/contact-us">📞 Contact Us</Link></li>
+              <li className="legal-nav-item"><Link href="/p/privacy-policy">🔒 Privacy Policy</Link></li>
+              <li className="legal-nav-item"><Link href="/p/terms">📜 Terms of Service</Link></li>
+              <li className="legal-nav-item"><Link href="/p/disclaimer">⚖️ SEBI Disclaimer</Link></li>
+            </ul>
+          </aside>
+
+          {/* MAIN CONTENT BODY */}
+          <main className="legal-card-body">
+            {/* MANDATORY SEBI DISCLAIMER BOX */}
+            <div className="sebi-safety-box">
+              <div className="sebi-safety-header">
+                <span>⚠️</span>
+                <span>Mandatory SEBI Regulatory Compliance Notice</span>
+              </div>
+              <p className="sebi-safety-text">
+                <strong>Allotment Status of IPO</strong> (<code>allotmentstatusofipo.in</code>) is strictly an independent educational directory and financial research portal. We are <strong>NOT registered with the Securities and Exchange Board of India (SEBI)</strong> as an Investment Adviser (RIA) or Research Analyst (RA). We do not offer financial advisory services, portfolio management, or buy/sell recommendations.
+              </p>
+            </div>
+
+            <h2>1. Our Mission &amp; Value Proposition</h2>
+            <p>
+              Navigating Initial Public Offerings (IPOs) in India can be an overwhelming experience for retail investors. On high-volume allotment evenings, investors frequently encounter server outages, broken redirect links, and conflicting basis-of-allotment announcements across multiple registrar domains.
+            </p>
+            <p>
+              <strong>Allotment Status of IPO</strong> was founded to solve this fragmentation by providing:
+            </p>
+            <ul>
+              <li><strong>Direct Gateway Redirection:</strong> Verified, one-click direct server paths to official SEBI-registered registrars (Link Intime, KFin Technologies, Bigshare Services, and CAMS).</li>
+              <li><strong>SEBI T+3 Timeline Transparency:</strong> Step-by-step masterclasses breaking down the mechanics of ASBA bank liens, UPI auto-mandates, and depository share credits.</li>
+              <li><strong>Informational Grey Market Premium (GMP) Tracking:</strong> Contextual market sentiment analysis highlighting risk factors and listing volatility.</li>
+            </ul>
+
+            <h2>2. Meet the Founder &amp; Editorial Leadership</h2>
+            <div className="eeat-founder-box">
+              <div className="eeat-avatar">👤</div>
+              <div>
+                <h3 className="eeat-name">Mahesh Chavan</h3>
+                <span className="eeat-role">Founder, Tech Architect &amp; Lead Financial Content Researcher</span>
+                <p className="eeat-bio">
+                  Based in Pune, Maharashtra, Mahesh is a software engineer and seasoned financial market analyst. He specializes in tracking capital market regulatory filings (DRHP/RHP), registrar API workflows, and financial infrastructure. His objective is to empower Indian retail investors with accurate, zero-cost, and ad-compliant educational resources.
+                </p>
+              </div>
+            </div>
+
+            <h2>3. Data Sourcing &amp; Integrity Standards</h2>
+            <p>
+              Every data point published on this portal is governed by strict editorial verification rules:
+            </p>
+            <ol>
+              <li><strong>Official Prospectuses:</strong> Company issue parameters, price bands, and lot sizes are extracted directly from Draft Red Herring Prospectuses (DRHP) filed with SEBI and stock exchanges.</li>
+              <li><strong>Exchange Verification:</strong> Bidding numbers and allotment finalization dates are validated against official disclosures from the Bombay Stock Exchange (BSE) and National Stock Exchange of India (NSE).</li>
+              <li><strong>No Commercial Bias:</strong> We do not accept paid compensation or corporate sponsorships to write favorable IPO reviews or manipulate sentiment.</li>
+            </ol>
+
+            <h2>4. Advertising &amp; Commercial Transparency</h2>
+            <p>
+              To maintain free access for all retail investors without subscription paywalls, our website is monetized through ethical, non-intrusive advertising partners including Google AdSense. Advertisements are clearly distinguished from editorial research. For queries regarding our policies, visit our <Link href="/p/contact-us" style={{ color: 'var(--primary-teal)', fontWeight: '700' }}>Contact Page</Link>.
+            </p>
+          </main>
         </div>
       </div>
     </div>
