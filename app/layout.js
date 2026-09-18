@@ -32,6 +32,9 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
+  other: {
+    'google-adsense-account': 'ca-pub-7009095515039268',
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -41,14 +44,13 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-
-        {/* GOOGLE ADSENSE AUTO ADS */}
-        <Script
+        
+        {/* RAW ADSENSE SCRIPT FOR VERIFICATION BOT */}
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7009095515039268"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        ></script>
 
         {/* GOOGLE ANALYTICS (GA4) */}
         <Script
