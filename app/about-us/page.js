@@ -3,6 +3,9 @@ import Link from 'next/link';
 export const metadata = {
   title: 'About Us & Editorial Standards | Allotment Status of IPO',
   description: 'Learn about Allotment Status of IPO, our founder Mahesh Chavan, editorial principles, and mission to deliver transparent, SEBI-compliant IPO intelligence.',
+  alternates: {
+    canonical: '/about-us',
+  },
 };
 
 export default function AboutUsPage() {
@@ -14,14 +17,14 @@ export default function AboutUsPage() {
           <nav className="legal-breadcrumbs" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
             <span>/</span>
-            <Link href="/p/about-us">Legal &amp; Policy</Link>
+            <Link href="/about-us">Legal &amp; Policy</Link>
             <span>/</span>
             <strong>About Us</strong>
           </nav>
 
           <div className="legal-top-badges">
             <span className="legal-compliance-pill">🛡️ E-E-A-T Verified</span>
-            <span className="legal-date-pill">📅 Updated: September 2026</span>
+            <span className="legal-date-pill">📅 Last reviewed: September 18, 2026</span>
           </div>
 
           <h1 className="legal-page-title">About Allotment Status of IPO</h1>
@@ -36,13 +39,13 @@ export default function AboutUsPage() {
         <div className="legal-columns-grid">
           {/* SIDEBAR NAVIGATION */}
           <aside className="legal-sidebar-sticky">
-            <h3 className="legal-sidebar-title">Legal &amp; Policy Hub</h3>
+            <div className="legal-sidebar-title">Legal &amp; Policy Hub</div>
             <ul className="legal-nav-menu">
-              <li className="legal-nav-item active"><Link href="/p/about-us">🛡️ About Us</Link></li>
-              <li className="legal-nav-item"><Link href="/p/contact-us">📞 Contact Us</Link></li>
-              <li className="legal-nav-item"><Link href="/p/privacy-policy">🔒 Privacy Policy</Link></li>
-              <li className="legal-nav-item"><Link href="/p/terms">📜 Terms of Service</Link></li>
-              <li className="legal-nav-item"><Link href="/p/disclaimer">⚖️ SEBI Disclaimer</Link></li>
+              <li className="legal-nav-item active"><Link href="/about-us" aria-current="page">🛡️ About Us</Link></li>
+              <li className="legal-nav-item"><Link href="/contact-us">📞 Contact Us</Link></li>
+              <li className="legal-nav-item"><Link href="/privacy-policy">🔒 Privacy Policy</Link></li>
+              <li className="legal-nav-item"><Link href="/terms">📜 Terms of Service</Link></li>
+              <li className="legal-nav-item"><Link href="/disclaimer">⚖️ SEBI Disclaimer</Link></li>
             </ul>
           </aside>
 
@@ -96,7 +99,7 @@ export default function AboutUsPage() {
 
             <h2>4. Advertising &amp; Commercial Transparency</h2>
             <p>
-              To maintain free access for all retail investors without subscription paywalls, our website is monetized through ethical, non-intrusive advertising partners including Google AdSense. Advertisements are clearly distinguished from editorial research. For queries regarding our policies, visit our <Link href="/p/contact-us" style={{ color: 'var(--primary-teal)', fontWeight: '700' }}>Contact Page</Link>.
+              To maintain free access for all retail investors without subscription paywalls, our website is monetized through ethical, non-intrusive advertising partners including Google AdSense. Advertisements are clearly distinguished from editorial research. For queries regarding our policies, visit our <Link href="/contact-us" style={{ color: 'var(--primary-teal)', fontWeight: '700' }}>Contact Page</Link>.
             </p>
           </main>
         </div>

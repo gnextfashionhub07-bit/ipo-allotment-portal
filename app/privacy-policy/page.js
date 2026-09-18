@@ -3,6 +3,9 @@ import Link from 'next/link';
 export const metadata = {
   title: 'Privacy Policy & Data Protection | Allotment Status of IPO',
   description: 'Learn how Allotment Status of IPO protects user privacy, complies with Google AdSense, DPDP Act 2023, and GDPR standards.',
+  alternates: {
+    canonical: '/privacy-policy',
+  },
 };
 
 export default function PrivacyPolicyPage() {
@@ -14,14 +17,14 @@ export default function PrivacyPolicyPage() {
           <nav className="legal-breadcrumbs" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
             <span>/</span>
-            <Link href="/p/about-us">Legal &amp; Policy</Link>
+            <Link href="/about-us">Legal &amp; Policy</Link>
             <span>/</span>
             <strong>Privacy Policy</strong>
           </nav>
 
           <div className="legal-top-badges">
             <span className="legal-compliance-pill">🔒 Data Protection Certified</span>
-            <span className="legal-date-pill">📅 Effective: September 2026</span>
+            <span className="legal-date-pill">📅 Last reviewed: September 18, 2026</span>
           </div>
 
           <h1 className="legal-page-title">Privacy Policy &amp; Cookie Compliance</h1>
@@ -36,13 +39,13 @@ export default function PrivacyPolicyPage() {
         <div className="legal-columns-grid">
           {/* SIDEBAR NAVIGATION */}
           <aside className="legal-sidebar-sticky">
-            <h3 className="legal-sidebar-title">Legal &amp; Policy Hub</h3>
+            <div className="legal-sidebar-title">Legal &amp; Policy Hub</div>
             <ul className="legal-nav-menu">
-              <li className="legal-nav-item"><Link href="/p/about-us">🛡️ About Us</Link></li>
-              <li className="legal-nav-item"><Link href="/p/contact-us">📞 Contact Us</Link></li>
-              <li className="legal-nav-item active"><Link href="/p/privacy-policy">🔒 Privacy Policy</Link></li>
-              <li className="legal-nav-item"><Link href="/p/terms">📜 Terms of Service</Link></li>
-              <li className="legal-nav-item"><Link href="/p/disclaimer">⚖️ SEBI Disclaimer</Link></li>
+              <li className="legal-nav-item"><Link href="/about-us">🛡️ About Us</Link></li>
+              <li className="legal-nav-item"><Link href="/contact-us">📞 Contact Us</Link></li>
+              <li className="legal-nav-item active"><Link href="/privacy-policy" aria-current="page">🔒 Privacy Policy</Link></li>
+              <li className="legal-nav-item"><Link href="/terms">📜 Terms of Service</Link></li>
+              <li className="legal-nav-item"><Link href="/disclaimer">⚖️ SEBI Disclaimer</Link></li>
             </ul>
           </aside>
 

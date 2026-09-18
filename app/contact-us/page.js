@@ -3,6 +3,9 @@ import Link from 'next/link';
 export const metadata = {
   title: 'Contact Us & Investor Support | Allotment Status of IPO',
   description: 'Get in touch with the Allotment Status of IPO editorial team, grievance officer, and official registrar support helplines.',
+  alternates: {
+    canonical: '/contact-us',
+  },
 };
 
 export default function ContactUsPage() {
@@ -14,14 +17,14 @@ export default function ContactUsPage() {
           <nav className="legal-breadcrumbs" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
             <span>/</span>
-            <Link href="/p/about-us">Legal &amp; Policy</Link>
+            <Link href="/about-us">Legal &amp; Policy</Link>
             <span>/</span>
             <strong>Contact Us</strong>
           </nav>
 
           <div className="legal-top-badges">
             <span className="legal-compliance-pill">📞 Investor Assistance</span>
-            <span className="legal-date-pill">📅 Updated: September 2026</span>
+            <span className="legal-date-pill">📅 Last reviewed: September 18, 2026</span>
           </div>
 
           <h1 className="legal-page-title">Contact Us &amp; Investor Grievance Desk</h1>
@@ -36,13 +39,13 @@ export default function ContactUsPage() {
         <div className="legal-columns-grid">
           {/* SIDEBAR NAVIGATION */}
           <aside className="legal-sidebar-sticky">
-            <h3 className="legal-sidebar-title">Legal &amp; Policy Hub</h3>
+            <div className="legal-sidebar-title">Legal &amp; Policy Hub</div>
             <ul className="legal-nav-menu">
-              <li className="legal-nav-item"><Link href="/p/about-us">🛡️ About Us</Link></li>
-              <li className="legal-nav-item active"><Link href="/p/contact-us">📞 Contact Us</Link></li>
-              <li className="legal-nav-item"><Link href="/p/privacy-policy">🔒 Privacy Policy</Link></li>
-              <li className="legal-nav-item"><Link href="/p/terms">📜 Terms of Service</Link></li>
-              <li className="legal-nav-item"><Link href="/p/disclaimer">⚖️ SEBI Disclaimer</Link></li>
+              <li className="legal-nav-item"><Link href="/about-us">🛡️ About Us</Link></li>
+              <li className="legal-nav-item active"><Link href="/contact-us" aria-current="page">📞 Contact Us</Link></li>
+              <li className="legal-nav-item"><Link href="/privacy-policy">🔒 Privacy Policy</Link></li>
+              <li className="legal-nav-item"><Link href="/terms">📜 Terms of Service</Link></li>
+              <li className="legal-nav-item"><Link href="/disclaimer">⚖️ SEBI Disclaimer</Link></li>
             </ul>
           </aside>
 
@@ -70,7 +73,7 @@ export default function ContactUsPage() {
                 <strong className="contact-box-title">General Support Email</strong>
                 <p className="contact-box-desc">
                   <code>contact@allotmentstatusofipo.in</code><br />
-                  <span style={{ fontSize: '0.78rem', color: '#64748b' }}>Guaranteed response within 24–48 business hours.</span>
+                  <span className="contact-box-note">Guaranteed response within 24–48 business hours.</span>
                 </p>
               </div>
 

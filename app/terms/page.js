@@ -3,6 +3,9 @@ import Link from 'next/link';
 export const metadata = {
   title: 'Terms of Service | Allotment Status of IPO',
   description: 'Terms and conditions governing the use of Allotment Status of IPO portal, registrar directories, and educational materials.',
+  alternates: {
+    canonical: '/terms',
+  },
 };
 
 export default function TermsPage() {
@@ -14,7 +17,7 @@ export default function TermsPage() {
           <nav className="legal-breadcrumbs" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
             <span>/</span>
-            <Link href="/p/about-us">Legal &amp; Policy</Link>
+            <Link href="/about-us">Legal &amp; Policy</Link>
             <span>/</span>
             <strong>Terms of Service</strong>
           </nav>
@@ -38,11 +41,11 @@ export default function TermsPage() {
           <aside className="legal-sidebar-sticky">
             <h3 className="legal-sidebar-title">Legal &amp; Policy Hub</h3>
             <ul className="legal-nav-menu">
-              <li className="legal-nav-item"><Link href="/p/about-us">🛡️ About Us</Link></li>
-              <li className="legal-nav-item"><Link href="/p/contact-us">📞 Contact Us</Link></li>
-              <li className="legal-nav-item"><Link href="/p/privacy-policy">🔒 Privacy Policy</Link></li>
-              <li className="legal-nav-item active"><Link href="/p/terms">📜 Terms of Service</Link></li>
-              <li className="legal-nav-item"><Link href="/p/disclaimer">⚖️ SEBI Disclaimer</Link></li>
+              <li className="legal-nav-item"><Link href="/about-us">🛡️ About Us</Link></li>
+              <li className="legal-nav-item"><Link href="/contact-us">📞 Contact Us</Link></li>
+              <li className="legal-nav-item"><Link href="/privacy-policy">🔒 Privacy Policy</Link></li>
+              <li className="legal-nav-item active"><Link href="/terms" aria-current="page">📜 Terms of Service</Link></li>
+              <li className="legal-nav-item"><Link href="/disclaimer">⚖️ SEBI Disclaimer</Link></li>
             </ul>
           </aside>
 

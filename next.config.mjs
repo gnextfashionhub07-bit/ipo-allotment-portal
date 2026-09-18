@@ -7,6 +7,7 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // Legacy specific Blogger posts mapping to active blog guides
       {
         source: '/2026/08/how-to-check-ipo-allotment-status_01577388511.html',
         destination: '/blog/how-to-check-ipo-allotment-status',
@@ -30,6 +31,39 @@ const nextConfig = {
       {
         source: '/2026/08/reliance-power-share-value-today-price.html',
         destination: '/blog/reliance-power-share-value-today-price',
+        permanent: true,
+      },
+      {
+        source: '/2026/08/gmp-in-ipo.html',
+        destination: '/#gmp-calculator',
+        permanent: true,
+      },
+      // Clean root migration for policy pages
+      {
+        source: '/p/:path*',
+        destination: '/:path*',
+        permanent: true,
+      },
+      // Old Blogger feeds and labels
+      {
+        source: '/atom.xml',
+        destination: '/sitemap.xml',
+        permanent: true,
+      },
+      {
+        source: '/feeds/:path*',
+        destination: '/sitemap.xml',
+        permanent: true,
+      },
+      {
+        source: '/search/:path*',
+        destination: '/blog',
+        permanent: true,
+      },
+      // Universal fallback for any legacy Blogger date-based URLs
+      {
+        source: '/:year(\\d{4})/:month(\\d{2})/:slug*',
+        destination: '/blog',
         permanent: true,
       }
     ];

@@ -50,7 +50,7 @@ export default function Header() {
               </Link>
             </li>
             <li>
-              <Link href="/p/about-us" className="nav-menu-item">
+              <Link href="/about-us" className="nav-menu-item">
                 About
               </Link>
             </li>
@@ -95,8 +95,8 @@ export default function Header() {
             <li><Link href="/#gmp-calculator" onClick={() => setMobileMenuOpen(false)}>🧮 GMP Calculator</Link></li>
             <li><Link href="/#registrar-tool" onClick={() => setMobileMenuOpen(false)}>⚡ Registrar Gateways</Link></li>
             <li><Link href="/blog" onClick={() => setMobileMenuOpen(false)}>📖 Guides &amp; Reviews</Link></li>
-            <li><Link href="/p/about-us" onClick={() => setMobileMenuOpen(false)}>ℹ️ About Us</Link></li>
-            <li><Link href="/p/contact-us" onClick={() => setMobileMenuOpen(false)}>📞 Contact Us</Link></li>
+            <li><Link href="/about-us" onClick={() => setMobileMenuOpen(false)}>ℹ️ About Us</Link></li>
+            <li><Link href="/contact-us" onClick={() => setMobileMenuOpen(false)}>📞 Contact Us</Link></li>
           </ul>
         </div>
       )}

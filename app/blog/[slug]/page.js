@@ -38,7 +38,7 @@ export default function ArticlePage({ params }) {
     author: {
       '@type': 'Person',
       name: article.author,
-      url: 'https://www.allotmentstatusofipo.in/p/about-us'
+      url: 'https://www.allotmentstatusofipo.in/about-us'
     },
     publisher: {
       '@type': 'Organization',

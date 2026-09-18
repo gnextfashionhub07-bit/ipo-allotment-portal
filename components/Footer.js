@@ -47,11 +47,11 @@ export default function Footer() {
           <div className="footer-col-nav">
             <h4 className="footer-heading">Legal &amp; Policy</h4>
             <ul className="footer-links-clean">
-              <li><Link href="/p/about-us">About Us</Link></li>
-              <li><Link href="/p/contact-us">Contact Us</Link></li>
-              <li><Link href="/p/privacy-policy">Privacy Policy</Link></li>
-              <li><Link href="/p/terms">Terms of Service</Link></li>
-              <li><Link href="/p/disclaimer">Disclaimer</Link></li>
+              <li><Link href="/about-us">About Us</Link></li>
+              <li><Link href="/contact-us">Contact Us</Link></li>
+              <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+              <li><Link href="/terms">Terms of Service</Link></li>
+              <li><Link href="/disclaimer">Disclaimer</Link></li>
             </ul>
           </div>
         </div>

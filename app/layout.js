@@ -11,7 +11,7 @@ export const metadata = {
   title: 'IPO Allotment Status Direct Portal & Live GMP Tracker 2026',
   description: 'Check live IPO allotment status instantly via Link Intime, KFintech, and Bigshare official registrars. Real-time GMP tracker, SEBI T+3 allotment dates, and ASBA bidding guides.',
   keywords: 'ipo allotment status, check ipo allotment, link intime ipo status, kfintech ipo allotment, ipo gmp today, live ipo tracker 2026',
-  authors: [{ name: 'Mahesh Chavan', url: 'https://www.allotmentstatusofipo.in/p/about-us' }],
+  authors: [{ name: 'Mahesh Chavan', url: 'https://www.allotmentstatusofipo.in/about-us' }],
   creator: 'Mahesh Chavan',
   openGraph: {
     title: 'IPO Allotment Status Direct Portal & Live GMP Tracker 2026',
