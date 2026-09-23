@@ -1,33 +1,7 @@
-import { ARTICLES } from '../../../content/articles';
-import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { ARTICLES } from '../content/articles';
 
-export async function generateStaticParams() {
-  return ARTICLES.map((a) => ({ slug: a.slug }));
-}
-
-export async function generateMetadata({ params }) {
-  const article = ARTICLES.find((a) => a.slug === params.slug);
-  if (!article) return { title: 'Article Not Found' };
-
-  return {
-    title: `${article.title} | Allotment Status of IPO`,
-    description: article.excerpt,
-    openGraph: {
-      title: article.title,
-      description: article.excerpt,
-      type: 'article',
-      publishedTime: article.date,
-      authors: [article.author],
-    }
-  };
-}
-
-export default function ArticlePage({ params }) {
-  const article = ARTICLES.find((a) => a.slug === params.slug);
-  if (!article) notFound();
-
-  // Find 3 related articles (excluding current)
+export default function ArticlePageLayout({ article, children }) {
   const relatedArticles = ARTICLES.filter((a) => a.slug !== article.slug).slice(0, 3);
 
   const articleSchema = {
@@ -37,7 +11,7 @@ export default function ArticlePage({ params }) {
     description: article.excerpt,
     author: {
       '@type': 'Person',
-      name: article.author,
+      name: article.author || 'Mahesh Chavan',
       url: 'https://www.allotmentstatusofipo.in/about-us'
     },
     publisher: {
@@ -49,7 +23,7 @@ export default function ArticlePage({ params }) {
       }
     },
     datePublished: '2026-08-15',
-    dateModified: '2026-09-12',
+    dateModified: '2026-09-23',
     mainEntityOfPage: `https://www.allotmentstatusofipo.in/blog/${article.slug}`
   };
 
@@ -97,11 +71,9 @@ export default function ArticlePage({ params }) {
         <div className="article-columns-grid">
           {/* LEFT: MAIN ARTICLE BODY */}
           <main className="article-primary-column">
-            {/* FORMATTED ARTICLE CONTENT */}
-            <div 
-              className="article-rich-body"
-              dangerouslySetInnerHTML={{ __html: article.content }}
-            />
+            <div className="article-rich-body">
+              {children}
+            </div>
 
             {/* INLINE REGISTRAR TOOL CALLOUT */}
             <div className="inline-registrar-cta">

@@ -13,7 +13,13 @@ export default function Footer() {
           {/* COL 1: BRAND */}
           <div className="footer-col-brand">
             <Link href="/" className="footer-logo">
-              <div className="footer-logo-icon">📊</div>
+              <div className="footer-logo-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="20" x2="18" y2="10"></line>
+                  <line x1="12" y1="20" x2="12" y2="4"></line>
+                  <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+              </div>
               <span className="footer-logo-text">Allotment Status of IPO</span>
             </Link>
             <p className="footer-desc-short">
@@ -25,10 +31,11 @@ export default function Footer() {
           <div className="footer-col-nav">
             <h4 className="footer-heading">Quick Links</h4>
             <ul className="footer-links-clean">
-              <li><Link href="/#live-table">🔥 Live IPO Tracker</Link></li>
-              <li><Link href="/#gmp-calculator">🧮 GMP Calculator</Link></li>
-              <li><Link href="/#registrar-tool">⚡ Registrar Gateways</Link></li>
-              <li><Link href="/blog">📖 IPO Guides &amp; Articles</Link></li>
+              <li><Link href="/#live-table">Live IPO Tracker</Link></li>
+              <li><Link href="/#gmp-calculator">GMP Calculator</Link></li>
+              <li><Link href="/blog/how-to-check-ipo-allotment-status">Check Allotment Guide</Link></li>
+              <li><Link href="/blog/link-intime-ipo-allotment-status">Link Intime Allotment</Link></li>
+              <li><Link href="/blog/kfintech-ipo-allotment-status">KFintech Allotment Status</Link></li>
             </ul>
           </div>
 
@@ -36,10 +43,10 @@ export default function Footer() {
           <div className="footer-col-nav">
             <h4 className="footer-heading">Official Registrars</h4>
             <ul className="footer-links-clean">
-              <li><a href="https://linkintime.co.in/initial_offer/public-issues.html" target="_blank" rel="noopener noreferrer">Link Intime India ↗</a></li>
-              <li><a href="https://ipostatus.kfintech.com" target="_blank" rel="noopener noreferrer">KFin Technologies ↗</a></li>
-              <li><a href="https://www.bigshareonline.com/ipo_allotment.html" target="_blank" rel="noopener noreferrer">Bigshare Services ↗</a></li>
-              <li><a href="https://www.bseindia.com/investors/appli_check.aspx" target="_blank" rel="noopener noreferrer">BSE India Appli Check ↗</a></li>
+              <li><a href="https://linkintime.co.in/initial_offer/public-issues.html" target="_blank" rel="noopener noreferrer">Link Intime India</a></li>
+              <li><a href="https://ipostatus.kfintech.com" target="_blank" rel="noopener noreferrer">KFin Technologies</a></li>
+              <li><a href="https://www.bigshareonline.com/ipo_allotment.html" target="_blank" rel="noopener noreferrer">Bigshare Services</a></li>
+              <li><a href="https://www.bseindia.com/investors/appli_check.aspx" target="_blank" rel="noopener noreferrer">BSE India Appli Check</a></li>
             </ul>
           </div>
 

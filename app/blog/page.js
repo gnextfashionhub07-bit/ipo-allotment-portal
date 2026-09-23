@@ -118,11 +118,7 @@ export default function BlogIndex() {
 
               <div className="featured-meta-row">
                 <div className="featured-author-box">
-                  <div className="author-avatar">👤</div>
-                  <div>
-                    <strong className="author-name">{featuredArticle.author}</strong>
-                    <span className="author-role">Founder &amp; Financial Researcher</span>
-                  </div>
+                  <span className="featured-tag-editorial">IPO Research Desk</span>
                 </div>
 
                 <Link href={`/blog/${featuredArticle.slug}`} className="btn-read-featured">
@@ -170,8 +166,7 @@ export default function BlogIndex() {
 
                 <div className="article-card-footer">
                   <div className="article-author-info">
-                    <span className="author-mini-icon">✍️</span>
-                    <span className="author-mini-name">{art.author}</span>
+                    <span className="author-mini-name">IPO Desk</span>
                   </div>
 
                   <Link href={`/blog/${art.slug}`} className="btn-read-article">

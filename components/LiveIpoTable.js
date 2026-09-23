@@ -16,12 +16,19 @@ const FALLBACK_IPOS = [
   { id: 12, name: 'Qualiance International IPO', type: 'SME IPO', price: '₹95 - ₹100', date: 'Live Today', reg: 'Bigshare Services', status: 'Open Bidding', gmp: '₹38 (38%)', gainPct: 38, lotSize: 1200, issueSize: '₹48 Cr', regUrl: 'https://www.bigshareonline.com/ipo_allotment.html' }
 ];
 
-export default function LiveIpoTable() {
+export default function LiveIpoTable({ externalSearch = '', onSelectForCalc = null }) {
   const [ipos, setIpos] = useState(FALLBACK_IPOS);
   const [activeTab, setActiveTab] = useState('ALL');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(externalSearch || '');
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState('Just now');
+  const [lastUpdated, setLastUpdated] = useState('Live');
+
+  useEffect(() => {
+    if (externalSearch !== undefined && externalSearch !== null) {
+      setSearchQuery(externalSearch);
+      setCurrentPage(1);
+    }
+  }, [externalSearch]);
   
   // PAGINATION STATES
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,31 +42,39 @@ export default function LiveIpoTable() {
         const json = await res.json();
         if (json && json.data && json.data.length > 0) {
           const formatted = json.data.map((item, index) => {
-            const name = item.name || item.company_name || 'IPO Company';
-            const type = item.issue_type || (name.toLowerCase().includes('sme') ? 'SME IPO' : 'Mainboard');
-            const minPrice = item.min_price || '90';
-            const maxPrice = item.max_price || '100';
-            const reg = item.registrar_name || 'Bigshare Services';
-            const gmpVal = item.gmp || '₹25';
-            const gain = item.gain_pct || parseInt(gmpVal.replace(/\D/g, '')) || 30;
+            const name = item.name || 'IPO Company';
+            const type = item.type || (name.toLowerCase().includes('sme') ? 'SME IPO' : 'Mainboard');
+            const price = item.price || `₹${item.cutoffPrice || '100'}`;
+            const cutoffPrice = item.cutoffPrice || parseInt(String(price).split('-')[1]?.replace(/\D/g, '') || String(price).replace(/\D/g, '')) || 100;
+            const reg = item.reg || item.registrar_name || 'Link Intime India';
+            const gmp = item.gmp || '₹25';
+            const gmpValue = item.gmpValue !== undefined ? item.gmpValue : (parseInt(String(gmp).replace(/\D/g, '')) || 25);
+            const gain = item.gainPct !== undefined ? item.gainPct : 25;
+            const lotSize = item.lotSize || item.lot_size || (type === 'Mainboard' ? 75 : 1200);
+            const issueSize = item.issueSize || '₹100+ Cr';
+            const status = item.status || 'Active Issue';
+            const date = item.date || 'Live Status';
             
-            let regUrl = item.reg_url || 'https://ipostatus.kfintech.com';
-            if (reg.toLowerCase().includes('link')) regUrl = 'https://linkintime.co.in/initial_offer/public-issues.html';
-            if (reg.toLowerCase().includes('big') || reg.toLowerCase().includes('maashitla')) regUrl = 'https://www.bigshareonline.com/ipo_allotment.html';
-            if (reg.toLowerCase().includes('cams')) regUrl = 'https://www.camsonline.com/';
+            let regUrl = item.regUrl || item.reg_url || 'https://linkintime.co.in/initial_offer/public-issues.html';
+            if (reg.toLowerCase().includes('link') || reg.toLowerCase().includes('mufg')) regUrl = 'https://linkintime.co.in/initial_offer/public-issues.html';
+            if (reg.toLowerCase().includes('kfin')) regUrl = 'https://ipostatus.kfintech.com';
+            if (reg.toLowerCase().includes('big')) regUrl = 'https://www.bigshareonline.com/ipo_allotment.html';
+            if (reg.toLowerCase().includes('bse')) regUrl = 'https://www.bseindia.com/investors/appli_check.aspx';
 
             return {
               id: item.id || index + 1,
               name,
               type,
-              price: `₹${minPrice} - ₹${maxPrice}`,
-              date: item.allotment_date || 'Live Status',
+              price,
+              cutoffPrice,
+              date,
               reg,
-              status: item.status || 'Active Issue',
-              gmp: `${gmpVal} (${gain}%)`,
+              status,
+              gmp,
+              gmpValue,
               gainPct: gain,
-              lotSize: item.lot_size || (type === 'Mainboard' ? 100 : 1200),
-              issueSize: item.issue_size || '₹100+ Cr',
+              lotSize,
+              issueSize,
               regUrl
             };
           });
@@ -77,9 +92,16 @@ export default function LiveIpoTable() {
 
   useEffect(() => {
     fetchLiveIpos();
-    // Auto-poll every 60 seconds
-    const interval = setInterval(fetchLiveIpos, 60000);
-    return () => clearInterval(interval);
+    // Real-time auto-poll every 15 seconds
+    const interval = setInterval(fetchLiveIpos, 15000);
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') fetchLiveIpos();
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
   }, []);
 
   // Filter logic
@@ -266,7 +288,7 @@ export default function LiveIpoTable() {
                           className="gain-bar-fill" 
                           style={{ 
                             width: `${Math.min(ipo.gainPct || 30, 100)}%`,
-                            background: (ipo.gainPct || 0) > 50 ? '#10b981' : (ipo.gainPct || 0) > 20 ? '#0d9488' : '#f59e0b'
+                            background: (ipo.gainPct || 0) > 50 ? '#10b981' : (ipo.gainPct || 0) > 20 ? '#059669' : '#f59e0b'
                           }} 
                         />
                       </div>
@@ -293,15 +315,27 @@ export default function LiveIpoTable() {
 
                   {/* ACTION BUTTON */}
                   <td style={{ textAlign: 'right' }}>
-                    <a
-                      href={ipo.regUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-check-allotment"
-                    >
-                      <span>Check Status</span>
-                      <span className="arrow-icon">↗</span>
-                    </a>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', justifyContent: 'flex-end' }}>
+                      {onSelectForCalc && (
+                        <button
+                          type="button"
+                          onClick={() => onSelectForCalc(ipo)}
+                          className="btn-table-calc"
+                          title="Calculate live profit in GMP Calculator"
+                        >
+                          🧮 Calc
+                        </button>
+                      )}
+                      <a
+                        href={ipo.regUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-check-allotment"
+                      >
+                        <span>Check Status</span>
+                        <span className="arrow-icon">↗</span>
+                      </a>
+                    </div>
                   </td>
                 </tr>
               ))

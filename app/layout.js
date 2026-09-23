@@ -1,7 +1,6 @@
 import './globals.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import MarketTicker from '../components/MarketTicker';
 import SchemaJsonLd from '../components/SchemaJsonLd';
 import AgentationDev from '../components/AgentationDev';
 import Script from 'next/script';
@@ -77,29 +76,51 @@ export default function RootLayout({ children }) {
           `}
         </Script>
 
-        {/* GOOGLE READER REVENUE MANAGER */}
-        <Script
-          async
-          src="https://news.google.com/swg/js/v1/swg-basic.js"
-          strategy="afterInteractive"
-        />
-        <Script id="reader-revenue-manager" strategy="afterInteractive">
+        {/* ERROR GUARD FOR 3RD PARTY SCRIPTS & EXTENSIONS IN DEV */}
+        <Script id="dev-error-guard" strategy="beforeInteractive">
           {`
-            (self.SWG_BASIC = self.SWG_BASIC || []).push( basicSubscriptions => {
-              basicSubscriptions.init({
-                type: "NewsArticle",
-                isPartOfType: ["Product"],
-                isPartOfProductId: "CAowmbXMDA:openaccess",
-                clientOptions: { theme: "light", lang: "en" },
+            if (typeof window !== 'undefined') {
+              window.addEventListener('unhandledrejection', function(event) {
+                if (event.reason && (
+                  event.reason.message === 'Failed to fetch' || 
+                  (event.reason.stack && event.reason.stack.includes('swg-basic.js')) ||
+                  (event.reason.stack && event.reason.stack.includes('chrome-extension'))
+                )) {
+                  event.preventDefault();
+                }
               });
-            });
+            }
           `}
         </Script>
+
+        {/* GOOGLE READER REVENUE MANAGER (Production Only) */}
+        {process.env.NODE_ENV === 'production' && (
+          <>
+            <Script
+              async
+              src="https://news.google.com/swg/js/v1/swg-basic.js"
+              strategy="afterInteractive"
+            />
+            <Script id="reader-revenue-manager" strategy="afterInteractive">
+              {`
+                try {
+                  (self.SWG_BASIC = self.SWG_BASIC || []).push( basicSubscriptions => {
+                    basicSubscriptions.init({
+                      type: "NewsArticle",
+                      isPartOfType: ["Product"],
+                      isPartOfProductId: "CAowmbXMDA:openaccess",
+                      clientOptions: { theme: "light", lang: "en" },
+                    });
+                  });
+                } catch(e) {}
+              `}
+            </Script>
+          </>
+        )}
         
         <SchemaJsonLd />
       </head>
       <body>
-        <MarketTicker />
         <Header />
         <main>{children}</main>
         <Footer />

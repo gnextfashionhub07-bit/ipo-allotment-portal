@@ -38,10 +38,75 @@ const nextConfig = {
         destination: '/#gmp-calculator',
         permanent: true,
       },
-      // Clean root migration for policy pages
       {
-        source: '/p/:path*',
-        destination: '/:path*',
+        source: '/2026/08/indo-mim-ipo-2026-review.html',
+        destination: '/blog/how-to-check-ipo-allotment-status',
+        permanent: true,
+      },
+      {
+        source: '/2026/08/manipal-hospitals-ipo-2026-review.html',
+        destination: '/blog/how-to-check-ipo-allotment-status',
+        permanent: true,
+      },
+      {
+        source: '/2026/08/veritas-finance-ipo-drhp-details-2026.html',
+        destination: '/blog/how-to-check-ipo-allotment-status',
+        permanent: true,
+      },
+      // Clean root migration for policy pages (with and without .html)
+      {
+        source: '/p/privacy-policy:ext*',
+        destination: '/privacy-policy',
+        permanent: true,
+      },
+      {
+        source: '/p/terms-conditions:ext*',
+        destination: '/terms',
+        permanent: true,
+      },
+      {
+        source: '/p/disclaimer:ext*',
+        destination: '/disclaimer',
+        permanent: true,
+      },
+      {
+        source: '/p/about-us:ext*',
+        destination: '/about-us',
+        permanent: true,
+      },
+      {
+        source: '/p/contact-us:ext*',
+        destination: '/contact-us',
+        permanent: true,
+      },
+      {
+        source: '/privacy-policy.html',
+        destination: '/privacy-policy',
+        permanent: true,
+      },
+      {
+        source: '/terms-conditions.html',
+        destination: '/terms',
+        permanent: true,
+      },
+      {
+        source: '/terms.html',
+        destination: '/terms',
+        permanent: true,
+      },
+      {
+        source: '/disclaimer.html',
+        destination: '/disclaimer',
+        permanent: true,
+      },
+      {
+        source: '/about-us.html',
+        destination: '/about-us',
+        permanent: true,
+      },
+      {
+        source: '/contact-us.html',
+        destination: '/contact-us',
         permanent: true,
       },
       // Old Blogger feeds and labels

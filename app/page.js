@@ -57,6 +57,14 @@ const STEPS = [
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState(null);
+  const [heroSearch, setHeroSearch] = useState('');
+  const [selectedIpoForCalc, setSelectedIpoForCalc] = useState(null);
+
+  const handleSelectForCalc = (ipo) => {
+    setSelectedIpoForCalc(ipo);
+    const el = document.getElementById('gmp-calculator');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -66,11 +74,12 @@ export default function Home() {
     <div className="homepage-wrapper">
       {/* HERO SECTION */}
       <section className="hero-section">
+        <div className="hero-bg-glow" />
         <div className="container hero-container">
           {/* BADGE */}
           <div className="hero-badge">
             <span className="live-pulse-dot" />
-            <span>LIVE IPO ALLOTMENT PORTAL • SEPTEMBER 2026</span>
+            <span>LIVE IPO ALLOTMENT PORTAL • REAL-TIME GMP</span>
           </div>
 
           {/* MAIN HEADLINE */}
@@ -83,39 +92,129 @@ export default function Home() {
             Fast, 100% verified 1-click status checking via official SEBI registrars — Link Intime, KFintech, Bigshare, and BSE/NSE. Real-time subscription analytics &amp; T+3 listing tracking.
           </p>
 
-          {/* HERO QUICK ACTION STATS */}
-          <div className="hero-stats-grid">
-            <div className="hero-stat-card">
-              <div className="stat-icon-wrap">⚡</div>
-              <div className="stat-data">
-                <span className="stat-value">1-Click</span>
-                <span className="stat-label">Direct SEBI Gateway</span>
-              </div>
+          {/* INTERACTIVE HERO SEARCH & ACTION CARD */}
+          <div className="hero-search-card">
+            <div className="hero-search-bar">
+              <span className="hero-search-icon">🔍</span>
+              <input
+                type="text"
+                placeholder="Search active IPO (e.g. Tata, Bajaj, Pranav, Jindal...)"
+                className="hero-search-input"
+                value={heroSearch}
+                onChange={(e) => setHeroSearch(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    const el = document.getElementById('live-table');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              />
+              <a href="#live-table" className="btn-hero-search-action">
+                <span>Check Live Allotments</span>
+                <span className="btn-hero-arrow">↓</span>
+              </a>
             </div>
+            <div className="hero-search-pills">
+              <span className="search-pills-label">Trending Now:</span>
+              <button 
+                type="button"
+                onClick={() => {
+                  setHeroSearch('Mainboard');
+                  const el = document.getElementById('live-table');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }} 
+                className="hero-search-pill"
+              >
+                🏢 Mainboard IPOs
+              </button>
+              <button 
+                type="button"
+                onClick={() => {
+                  setHeroSearch('SME');
+                  const el = document.getElementById('live-table');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }} 
+                className="hero-search-pill"
+              >
+                🚀 SME Issues
+              </button>
+              <button 
+                type="button"
+                onClick={() => {
+                  setHeroSearch('Link Intime');
+                  const el = document.getElementById('live-table');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }} 
+                className="hero-search-pill"
+              >
+                🏛️ Link Intime
+              </button>
+              <button 
+                type="button"
+                onClick={() => {
+                  setHeroSearch('KFin');
+                  const el = document.getElementById('live-table');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }} 
+                className="hero-search-pill"
+              >
+                ⚡ KFintech
+              </button>
+              <a href="#gmp-calculator" className="hero-search-pill">
+                🧮 Profit Calculator
+              </a>
+            </div>
+          </div>
 
-            <div className="hero-stat-card">
-              <div className="stat-icon-wrap">🛡️</div>
-              <div className="stat-data">
-                <span className="stat-value">100% Safe</span>
-                <span className="stat-label">Official Encrypted Servers</span>
+          {/* 4 DIRECT REGISTRAR GATEWAY CARDS */}
+          <div className="hero-gateways-grid">
+            <a href="https://linkintime.co.in/initial_offer/public-issues.html" target="_blank" rel="noopener noreferrer" className="hero-gateway-card">
+              <div className="gateway-card-top">
+                <span className="gateway-icon">🏢</span>
+                <span className="gateway-status-badge"><span className="live-pulse-dot-sm" /> Active</span>
               </div>
-            </div>
+              <div className="gateway-card-info">
+                <span className="gateway-name">Link Intime India</span>
+                <span className="gateway-sub">Tata, Bajaj &amp; Mainboard</span>
+              </div>
+              <span className="gateway-link-icon">↗</span>
+            </a>
 
-            <div className="hero-stat-card">
-              <div className="stat-icon-wrap">⏱️</div>
-              <div className="stat-data">
-                <span className="stat-value">SEBI T+3</span>
-                <span className="stat-label">Fast Settlement Cycle</span>
+            <a href="https://ipostatus.kfintech.com" target="_blank" rel="noopener noreferrer" className="hero-gateway-card">
+              <div className="gateway-card-top">
+                <span className="gateway-icon">⚡</span>
+                <span className="gateway-status-badge"><span className="live-pulse-dot-sm" /> Active</span>
               </div>
-            </div>
+              <div className="gateway-card-info">
+                <span className="gateway-name">KFin Technologies</span>
+                <span className="gateway-sub">High-Speed Cloud Portal</span>
+              </div>
+              <span className="gateway-link-icon">↗</span>
+            </a>
 
-            <div className="hero-stat-card">
-              <div className="stat-icon-wrap">📈</div>
-              <div className="stat-data">
-                <span className="stat-value">Live GMP</span>
-                <span className="stat-label">Instant Profit Calculator</span>
+            <a href="https://www.bigshareonline.com/ipo_allotment.html" target="_blank" rel="noopener noreferrer" className="hero-gateway-card">
+              <div className="gateway-card-top">
+                <span className="gateway-icon">🚀</span>
+                <span className="gateway-status-badge"><span className="live-pulse-dot-sm" /> Active</span>
               </div>
-            </div>
+              <div className="gateway-card-info">
+                <span className="gateway-name">Bigshare Online</span>
+                <span className="gateway-sub">SME &amp; Mainboard Leader</span>
+              </div>
+              <span className="gateway-link-icon">↗</span>
+            </a>
+
+            <a href="https://www.bseindia.com/investors/appli_check.aspx" target="_blank" rel="noopener noreferrer" className="hero-gateway-card">
+              <div className="gateway-card-top">
+                <span className="gateway-icon">🏛️</span>
+                <span className="gateway-status-badge"><span className="live-pulse-dot-sm" /> Active</span>
+              </div>
+              <div className="gateway-card-info">
+                <span className="gateway-name">BSE India Check</span>
+                <span className="gateway-sub">Exchange Direct Portal</span>
+              </div>
+              <span className="gateway-link-icon">↗</span>
+            </a>
           </div>
         </div>
       </section>
@@ -129,10 +228,10 @@ export default function Home() {
             <RegistrarLauncher />
 
             {/* 2. LIVE IPO TABLE */}
-            <LiveIpoTable />
+            <LiveIpoTable externalSearch={heroSearch} onSelectForCalc={handleSelectForCalc} />
 
             {/* 3. GMP & PROFIT CALCULATOR */}
-            <GmpCalculator />
+            <GmpCalculator selectedIpo={selectedIpoForCalc} />
 
             {/* 4. 4-STEP INFOGRAPHIC ROADMAP */}
             <div className="premium-section-card">
@@ -191,69 +290,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          {/* SIDEBAR COLUMN */}
-          <aside className="sidebar-column">
-            {/* UPSTOX PARTNER CARD */}
-            <div className="demat-promo-card">
-              <div className="demat-card-badge">Broker Partner • 0 Brokerage</div>
-              <h3 className="demat-title">Open Free Demat Account</h3>
-              <p className="demat-desc">
-                Apply for Mainboard and SME IPOs with ₹0 brokerage on delivery and lightning-fast UPI mandate verification on Upstox.
-              </p>
-              
-              <ul className="demat-features-list">
-                <li>✓ Instant Paperless KYC in 5 Mins</li>
-                <li>✓ 1-Click UPI Auto-Mandate Support</li>
-                <li>✓ Direct Mainboard &amp; SME IPO Bidding</li>
-              </ul>
-
-              <a 
-                href="https://upstox.com/open-account/?f=7VB7" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="btn-upstox"
-              >
-                <span>Open Free Account Now</span>
-                <span className="btn-arrow">→</span>
-              </a>
-
-              <div className="demat-disclosure">
-                Disclosure: This is an official partner/referral link. We may receive referral compensation if you register through this link at no additional cost to you.
-              </div>
-            </div>
-
-
-
-            {/* COMMUNITY JOIN CARD */}
-            <div className="sidebar-widget-card community-card">
-              <div className="community-header">
-                <span className="community-icon">💬</span>
-                <div>
-                  <h4 className="community-title">Join Live IPO Alerts</h4>
-                  <p className="community-sub">Get instant allotment notifications on WhatsApp</p>
-                </div>
-              </div>
-              <a 
-                href="https://chat.whatsapp.com/DQH7iDHuphR22OfJsHmPuo" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="btn-community-whatsapp"
-              >
-                <span>Join WhatsApp Channel</span>
-                <span>↗</span>
-              </a>
-            </div>
-
-            {/* GOOGLE ADSENSE RESPONSIVE UNIT */}
-            <div className="sidebar-widget-card ads-widget-card">
-              <div className="ad-container-tag">ADVERTISEMENT</div>
-              <div className="ad-box-placeholder">
-                <span className="ad-text-label">Google AdSense Responsive Unit</span>
-                <span className="ad-subtext-label">High Visibility In-Feed Placement</span>
-              </div>
-            </div>
-          </aside>
         </div>
       </div>
     </div>

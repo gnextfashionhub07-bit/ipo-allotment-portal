@@ -31,22 +31,22 @@ export default function Header() {
           <ul className="nav-menu-list">
             <li>
               <Link href="/#live-table" className="nav-menu-item">
-                <span>🔥</span> Live IPOs
+                Live IPOs
               </Link>
             </li>
             <li>
-              <Link href="/#gmp-calculator" className="nav-menu-item">
-                <span>🧮</span> GMP Calculator
+              <Link href="/#live-table" className="nav-menu-item">
+                GMP Tracker
               </Link>
             </li>
             <li>
               <Link href="/#registrar-tool" className="nav-menu-item">
-                <span>⚡</span> Registrars
+                Registrars
               </Link>
             </li>
             <li>
               <Link href="/blog" className="nav-menu-item">
-                <span>📖</span> Guides
+                Guides
               </Link>
             </li>
             <li>
@@ -64,7 +64,7 @@ export default function Header() {
             target="_blank" 
             rel="noopener noreferrer" 
             className="btn-header-wa"
-            title="Join free WhatsApp alert group"
+            title="Join free WhatsApp alert channel"
           >
             <span className="wa-icon">💬</span>
             <span className="wa-label">WhatsApp Alerts</span>
@@ -90,13 +90,13 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="mobile-nav-drawer">
           <ul className="mobile-menu-list">
-            <li><Link href="/" onClick={() => setMobileMenuOpen(false)}>🏠 Home</Link></li>
-            <li><Link href="/#live-table" onClick={() => setMobileMenuOpen(false)}>🔥 Live IPOs</Link></li>
-            <li><Link href="/#gmp-calculator" onClick={() => setMobileMenuOpen(false)}>🧮 GMP Calculator</Link></li>
-            <li><Link href="/#registrar-tool" onClick={() => setMobileMenuOpen(false)}>⚡ Registrar Gateways</Link></li>
-            <li><Link href="/blog" onClick={() => setMobileMenuOpen(false)}>📖 Guides &amp; Reviews</Link></li>
-            <li><Link href="/about-us" onClick={() => setMobileMenuOpen(false)}>ℹ️ About Us</Link></li>
-            <li><Link href="/contact-us" onClick={() => setMobileMenuOpen(false)}>📞 Contact Us</Link></li>
+            <li><Link href="/" onClick={() => setMobileMenuOpen(false)}>Home</Link></li>
+            <li><Link href="/#live-table" onClick={() => setMobileMenuOpen(false)}>Live IPOs</Link></li>
+            <li><Link href="/#live-table" onClick={() => setMobileMenuOpen(false)}>GMP Tracker</Link></li>
+            <li><Link href="/#registrar-tool" onClick={() => setMobileMenuOpen(false)}>Registrars</Link></li>
+            <li><Link href="/blog" onClick={() => setMobileMenuOpen(false)}>Guides &amp; Reviews</Link></li>
+            <li><Link href="/about-us" onClick={() => setMobileMenuOpen(false)}>About Us</Link></li>
+            <li><Link href="/contact-us" onClick={() => setMobileMenuOpen(false)}>Contact Us</Link></li>
           </ul>
         </div>
       )}
